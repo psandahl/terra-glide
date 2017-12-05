@@ -1,9 +1,7 @@
-#include <iostream>
-#include <glad\glad.h>
-#include <GLFW\glfw3.h>
+#include "Kernel.h"
+#include "Viewport.h"
 
 int main()
 {
-	std::cout << "Hello!\n";
-	return 0;
+	return runTerraGlide(std::make_tuple(1024, 768));
 }
