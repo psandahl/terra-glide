@@ -3,5 +3,5 @@
 
 int main()
 {
-	return runTerraGlide(std::make_tuple(1024, 768));
+    return runTerraGlide(std::make_tuple(1024, 768));
 }
