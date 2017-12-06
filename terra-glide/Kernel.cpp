@@ -1,14 +1,14 @@
 #include "Kernel.h"
+#include "TerraGlide.h"
 #include "Viewport.h"
 #include <iostream>
+#include <memory>
 #include <thread>
 #include <tuple>
-#include <glad\glad.h>
-#include <GLFW\glfw3.h>
 
 GLFWwindow* createGLContext(const Viewport& initialViewport);
-void kernelThreadEntry(GLFWwindow* window);
-void applicationThreadEntry();
+void kernelThreadEntry(std::shared_ptr<Kernel> kernel);
+void applicationThreadEntry(std::shared_ptr<TerraGlide> terraGlide);
 
 int runTerraGlide(Viewport initialViewport)
 {
@@ -28,11 +28,15 @@ int runTerraGlide(Viewport initialViewport)
         return -1;
     }
 
+    // Let the Kernel and the TerraGlide objects live on the heap.
+    auto kernel = std::make_shared<Kernel>(window, initialViewport);
+    auto terraGlide = std::make_shared<TerraGlide>();
+
     // Start the application thread.
-    std::thread applicationThread(applicationThreadEntry);
+    std::thread applicationThread(applicationThreadEntry, terraGlide);
 
     // Continue the kernel thread in the current thread.
-    kernelThreadEntry(window);
+    kernelThreadEntry(kernel);
 
     // Wait for the application thread.
     applicationThread.join();
@@ -42,6 +46,23 @@ int runTerraGlide(Viewport initialViewport)
 
     // Done with successful status.
     return 0;
+}
+
+void Kernel::applyGlobalSettings() const
+{
+    // Dummy for now.
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+}
+
+void Kernel::renderLoop() const
+{
+    while (!glfwWindowShouldClose(m_window))
+    {
+        glViewport(0, 0, std::get<0>(m_viewport), std::get<1>(m_viewport));
+        glClear(GL_COLOR_BUFFER_BIT);
+        glfwSwapBuffers(m_window);
+        glfwPollEvents();
+    }
 }
 
 // Create and configure the OpenGL context. The context is made
@@ -81,20 +102,12 @@ GLFWwindow* createGLContext(const Viewport& initialViewport)
     return window;
 }
 
-void kernelThreadEntry(GLFWwindow* window)
+void kernelThreadEntry(std::shared_ptr<Kernel> kernel)
 {
-    // Dummy for now.
-    glViewport(0, 0, 1024, 768);
-    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-
-    while (!glfwWindowShouldClose(window))
-    {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+    kernel->applyGlobalSettings();
+    kernel->renderLoop();
 }
 
-void applicationThreadEntry()
+void applicationThreadEntry(std::shared_ptr<TerraGlide> terraGlide)
 {
 }

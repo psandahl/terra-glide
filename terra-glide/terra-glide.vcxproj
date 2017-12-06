@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kernel.h" />
+    <ClInclude Include="TerraGlide.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -32,5 +32,8 @@
     <ClInclude Include="Kernel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TerraGlide.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
