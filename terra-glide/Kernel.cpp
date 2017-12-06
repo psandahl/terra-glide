@@ -10,6 +10,10 @@ GLFWwindow* createGLContext(const Viewport& initialViewport);
 void kernelThreadEntry(std::shared_ptr<Kernel> kernel);
 void applicationThreadEntry(std::shared_ptr<TerraGlide> terraGlide);
 
+// In order to handle callbacks we must have a plain old pointer. But
+// don't worry, once set if will never change to any other object.
+Kernel* g_kernel = nullptr;
+
 int runTerraGlide(Viewport initialViewport)
 {
     // Create the OpenGL context.
@@ -31,6 +35,11 @@ int runTerraGlide(Viewport initialViewport)
     // Let the Kernel and the TerraGlide objects live on the heap.
     auto kernel = std::make_shared<Kernel>(window, initialViewport);
     auto terraGlide = std::make_shared<TerraGlide>();
+
+    // Set the global Kernel pointer and register callbacks.
+    g_kernel = kernel.get();
+
+    // TODO ...
 
     // Start the application thread.
     std::thread applicationThread(applicationThreadEntry, terraGlide);
