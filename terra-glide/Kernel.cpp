@@ -1,4 +1,6 @@
+#include "Event.h"
 #include "Kernel.h"
+#include "Link.h"
 #include "TerraGlide.h"
 #include "Viewport.h"
 #include <iostream>
@@ -33,8 +35,11 @@ int runTerraGlide(Viewport initialViewport)
         return -1;
     }
 
+    // Create the events link.
+    auto events = std::make_shared<Link<Event>>();
+
     // Let the Kernel and the TerraGlide objects live on the heap.
-    auto kernel = std::make_shared<Kernel>(window, initialViewport);
+    auto kernel = std::make_shared<Kernel>(window, events, initialViewport, glfwGetTime());
     auto terraGlide = std::make_shared<TerraGlide>();
 
     // Set the global Kernel pointer and register callbacks.
