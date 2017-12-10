@@ -69,7 +69,8 @@ void Kernel::renderLoop() const
 {
     while (!glfwWindowShouldClose(m_window))
     {
-        glViewport(0, 0, std::get<0>(m_viewport), std::get<1>(m_viewport));
+        auto[width, height] = m_viewport;
+        glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(m_window);
         glfwPollEvents();
