@@ -121,6 +121,7 @@
     <ClCompile Include="..\..\..\..\3pp\src\glad.c" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="TerraGlide.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Event.h" />

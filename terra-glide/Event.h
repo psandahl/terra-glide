@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Viewport.h"
-
 enum class EventType
 {
-    Frame = 0
+    Frame = 0,
+    Quit
 };
 
 struct FrameData
 {
     double frameDuration;
-    Viewport viewport;
+    int width;
+    int height;
 };
 
 union EventData

@@ -32,7 +32,7 @@ public:
     Kernel& operator=(const Kernel&) = delete;
 
     void applyGlobalSettings() const;
-    void renderLoop() const;
+    void renderLoop();
 
     void setViewport(int width, int height) noexcept
     {

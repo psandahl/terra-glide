@@ -40,7 +40,7 @@ int runTerraGlide(Viewport initialViewport)
 
     // Let the Kernel and the TerraGlide objects live on the heap.
     auto kernel = std::make_shared<Kernel>(window, events, initialViewport, glfwGetTime());
-    auto terraGlide = std::make_shared<TerraGlide>();
+    auto terraGlide = std::make_shared<TerraGlide>(events);
 
     // Set the global Kernel pointer and register callbacks.
     g_kernel = kernel.get();
@@ -70,16 +70,24 @@ void Kernel::applyGlobalSettings() const
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void Kernel::renderLoop() const
+void Kernel::renderLoop()
 {
     while (!glfwWindowShouldClose(m_window))
     {
         auto[width, height] = m_viewport;
+        auto now = glfwGetTime();
+        auto frameDuration = now - m_lastTimestamp;
+        m_lastTimestamp = now;
+
+        m_events->post({ EventType::Frame, { frameDuration, width, height } });
+
         glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
+
+    m_events->post({ EventType::Quit });
 }
 
 // Create and configure the OpenGL context. The context is made
@@ -127,6 +135,7 @@ void kernelThreadEntry(std::shared_ptr<Kernel> kernel)
 
 void applicationThreadEntry(std::shared_ptr<TerraGlide> terraGlide)
 {
+    terraGlide->run();
 }
 
 void windowSizeCallback(GLFWwindow* window, int width, int height)
