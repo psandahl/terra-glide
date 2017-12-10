@@ -28,6 +28,11 @@ public:
     void applyGlobalSettings() const;
     void renderLoop() const;
 
+    void setViewport(int width, int height) noexcept
+    {
+        m_viewport = std::make_tuple(width, height);
+    }
+
 private:
     GLFWwindow* m_window;
     Viewport m_viewport;

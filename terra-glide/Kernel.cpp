@@ -9,6 +9,7 @@
 GLFWwindow* createGLContext(const Viewport& initialViewport);
 void kernelThreadEntry(std::shared_ptr<Kernel> kernel);
 void applicationThreadEntry(std::shared_ptr<TerraGlide> terraGlide);
+void windowSizeCallback(GLFWwindow* window, int width, int height);
 
 // In order to handle callbacks we must have a plain old pointer. But
 // don't worry, once set if will never change to any other object.
@@ -39,7 +40,8 @@ int runTerraGlide(Viewport initialViewport)
     // Set the global Kernel pointer and register callbacks.
     g_kernel = kernel.get();
 
-    // TODO ...
+    // Set the window size callback.
+    glfwSetWindowSizeCallback(window, windowSizeCallback);
 
     // Start the application thread.
     std::thread applicationThread(applicationThreadEntry, terraGlide);
@@ -119,4 +121,10 @@ void kernelThreadEntry(std::shared_ptr<Kernel> kernel)
 
 void applicationThreadEntry(std::shared_ptr<TerraGlide> terraGlide)
 {
+}
+
+void windowSizeCallback(GLFWwindow* window, int width, int height)
+{
+    std::cout << "Callback. New size: " << width << ", " << height << std::endl;
+    g_kernel->setViewport(width, height);
 }
