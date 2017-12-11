@@ -1,6 +1,7 @@
 #include "Event.h"
 #include "Kernel.h"
 #include "Link.h"
+#include "Request.h"
 #include "TerraGlide.h"
 #include "Viewport.h"
 #include <iostream>
@@ -35,12 +36,16 @@ int runTerraGlide(Viewport initialViewport)
         return -1;
     }
 
-    // Create the events link.
+    // Create the Events link.
     auto events = std::make_shared<Link<Event>>();
 
+    // Create the StopRequests link.
+    auto stopRequests = std::make_shared<Link<StopRequest>>();
+
     // Let the Kernel and the TerraGlide objects live on the heap.
-    auto kernel = std::make_shared<Kernel>(window, events, initialViewport, glfwGetTime());
-    auto terraGlide = std::make_shared<TerraGlide>(events);
+    auto kernel = std::make_shared<Kernel>(window, events, stopRequests, 
+                                           initialViewport, glfwGetTime());
+    auto terraGlide = std::make_shared<TerraGlide>(events, stopRequests);
 
     // Set the global Kernel pointer and register callbacks.
     g_kernel = kernel.get();
@@ -89,12 +94,19 @@ void Kernel::renderLoop() noexcept
         glfwPollEvents();
     }
 
+    // If the termination is initiated by TerraGlide this is
+    // unnecessary, but it's harmless. Keep it simple.
     m_events->post({ EventType::Quit });
 }
 
 void Kernel::scanRequests() noexcept
 {
-
+    auto shallStop = m_stopRequests->poll();
+    if (shallStop.has_value())
+    {
+        // Signal GLFW for termination.
+        glfwSetWindowShouldClose(m_window, GLFW_TRUE);
+    }
 }
 
 // Create and configure the OpenGL context. The context is made

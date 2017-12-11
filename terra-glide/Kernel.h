@@ -2,6 +2,7 @@
 
 #include "Event.h"
 #include "Link.h"
+#include "Request.h"
 #include "Viewport.h"
 #include <glad\glad.h>
 #include <GLFW\glfw3.h>
@@ -16,10 +17,14 @@ int runTerraGlide(Viewport initialViewport);
 class Kernel
 {
 public:
-    Kernel(GLFWwindow* window, std::shared_ptr<Link<Event>> events,  
-           Viewport& viewport, double now) :
+    Kernel(GLFWwindow* window, 
+           std::shared_ptr<Link<Event>> events,  
+           std::shared_ptr<Link<StopRequest>> stopRequests,
+           Viewport& viewport, 
+           double now) :
         m_window(window),
         m_events(events),
+        m_stopRequests(stopRequests),
         m_viewport(viewport),
         m_lastTimestamp(now)
     {
@@ -43,6 +48,7 @@ public:
 private:
     GLFWwindow* m_window; // Plain old pointer.
     std::shared_ptr<Link<Event>> m_events;
+    std::shared_ptr<Link<StopRequest>> m_stopRequests;
     Viewport m_viewport;
     double m_lastTimestamp;
 };

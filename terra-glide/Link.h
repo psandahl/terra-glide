@@ -43,15 +43,16 @@ public:
     {
         std::unique_lock<std::mutex> lock(m_mutex);
 
-        auto result();
+        std::optional<Request> empty;
+        std::optional<Request> result = !m_queue.empty() ? m_queue.front() : empty;
+
         if (!m_queue.empty())
         {
-            result = m_queue.front();
             m_queue.pop();
         }
 
         lock.unlock();
-        
+
         return result;
     }
 

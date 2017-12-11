@@ -127,6 +127,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Kernel.h" />
     <ClInclude Include="Link.h" />
+    <ClInclude Include="Request.h" />
     <ClInclude Include="TerraGlide.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>

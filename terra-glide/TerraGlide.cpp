@@ -32,5 +32,17 @@ void TerraGlide::run() noexcept
 
 void TerraGlide::frame(const Viewport& viewport, double duration) noexcept
 {
-    std::cout << "TerraGlide::frame() - " << duration << std::endl;
+    //std::cout << "TerraGlide::frame() - " << duration << std::endl;
+    ++dummy;
+    if (dummy == 300)
+    {
+        std::cout << "Frame 300. Stop\n";
+        stop();
+    }
+}
+
+void TerraGlide::stop() noexcept
+{
+    m_stopRequests->post(0);
+    m_running = false;
 }
