@@ -3,6 +3,7 @@
 #include <condition_variable>
 #include <mutex>
 #include <queue>
+#include <optional>
 
 template <class Request>
 class Link
@@ -36,6 +37,22 @@ public:
         m_cv.notify_one();
 
         return val;
+    }
+
+    std::optional<Request> poll() noexcept
+    {
+        std::unique_lock<std::mutex> lock(m_mutex);
+
+        auto result();
+        if (!m_queue.empty())
+        {
+            result = m_queue.front();
+            m_queue.pop();
+        }
+
+        lock.unlock();
+        
+        return result;
     }
 
 private:
