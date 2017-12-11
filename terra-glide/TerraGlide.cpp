@@ -14,7 +14,7 @@ void TerraGlide::run() noexcept
         case EventType::Frame:
         {
             auto viewport = std::make_tuple(event.eventData.frameData.width, event.eventData.frameData.height);
-            render(viewport, event.eventData.frameData.frameDuration);
+            frame(viewport, event.eventData.frameData.frameDuration);
         }
             break;
 
@@ -30,7 +30,7 @@ void TerraGlide::run() noexcept
     }
 }
 
-void TerraGlide::render(const Viewport& viewport, double duration) noexcept
+void TerraGlide::frame(const Viewport& viewport, double duration) noexcept
 {
-    std::cout << "TerraGlide::render() - " << duration << std::endl;
+    std::cout << "TerraGlide::frame() - " << duration << std::endl;
 }

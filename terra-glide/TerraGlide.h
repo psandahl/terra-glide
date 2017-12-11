@@ -23,7 +23,7 @@ public:
     void run() noexcept;
 
 private:
-    void render(const Viewport& viewport, double duration) noexcept;
+    void frame(const Viewport& viewport, double duration) noexcept;
 
     std::shared_ptr<Link<Event>> m_events;
     bool m_running;
