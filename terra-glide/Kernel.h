@@ -31,8 +31,9 @@ public:
     Kernel(const Kernel&) = delete;
     Kernel& operator=(const Kernel&) = delete;
 
-    void applyGlobalSettings() const;
-    void renderLoop();
+    void applyGlobalSettings() const noexcept;
+    void renderLoop() noexcept;
+    void scanRequests() noexcept;
 
     void setViewport(int width, int height) noexcept
     {

@@ -64,16 +64,18 @@ int runTerraGlide(Viewport initialViewport)
     return 0;
 }
 
-void Kernel::applyGlobalSettings() const
+void Kernel::applyGlobalSettings() const noexcept
 {
     // Dummy for now.
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void Kernel::renderLoop()
+void Kernel::renderLoop() noexcept
 {
     while (!glfwWindowShouldClose(m_window))
     {
+        scanRequests();
+
         auto[width, height] = m_viewport;
         auto now = glfwGetTime();
         auto frameDuration = now - m_lastTimestamp;
@@ -88,6 +90,11 @@ void Kernel::renderLoop()
     }
 
     m_events->post({ EventType::Quit });
+}
+
+void Kernel::scanRequests() noexcept
+{
+
 }
 
 // Create and configure the OpenGL context. The context is made
