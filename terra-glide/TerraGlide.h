@@ -2,6 +2,7 @@
 
 #include "Event.h"
 #include "Link.h"
+#include "Viewport.h"
 #include <memory>
 
 class TerraGlide
@@ -19,9 +20,11 @@ public:
 
     TerraGlide& operator=(const TerraGlide&) = delete;
 
-    void run();
+    void run() noexcept;
 
 private:
+    void render(const Viewport& viewport, double duration) noexcept;
+
     std::shared_ptr<Link<Event>> m_events;
     bool m_running;
 };

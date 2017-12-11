@@ -1,9 +1,10 @@
 #include "Event.h"
 #include "Link.h"
 #include "TerraGlide.h"
+#include "Viewport.h"
 #include <iostream>
 
-void TerraGlide::run()
+void TerraGlide::run() noexcept
 {
     while (m_running)
     {
@@ -11,9 +12,10 @@ void TerraGlide::run()
         switch (event.eventType)
         {
         case EventType::Frame:
-            std::cout << "TerraGlide::run(): Frame duration: " << event.eventData.frameData.frameDuration
-                << ", width: " << event.eventData.frameData.width
-                << ", height: " << event.eventData.frameData.height << std::endl;
+        {
+            auto viewport = std::make_tuple(event.eventData.frameData.width, event.eventData.frameData.height);
+            render(viewport, event.eventData.frameData.frameDuration);
+        }
             break;
 
         case EventType::Quit:
@@ -26,4 +28,9 @@ void TerraGlide::run()
             break;
         }
     }
+}
+
+void TerraGlide::render(const Viewport& viewport, double duration) noexcept
+{
+    std::cout << "TerraGlide::render() - " << duration << std::endl;
 }
