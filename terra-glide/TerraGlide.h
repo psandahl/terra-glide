@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Program.h"
 #include "Viewport.h"
 #include <memory>
 
@@ -22,4 +23,7 @@ public:
     TerraGlideStatus setup() noexcept;
     TerraGlideStatus frame(const Viewport& viewport, double duration) noexcept;
     void teardown() noexcept;
+
+private:
+    std::shared_ptr<Program> m_dummyProgram;
 };
