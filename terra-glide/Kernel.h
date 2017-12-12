@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Event.h"
-#include "Link.h"
-#include "Request.h"
+#include "TerraGlide.h"
 #include "Viewport.h"
 #include <glad\glad.h>
 #include <GLFW\glfw3.h>
@@ -18,13 +16,10 @@ class Kernel
 {
 public:
     Kernel(GLFWwindow* window, 
-           std::shared_ptr<Link<Event>> events,  
-           std::shared_ptr<Link<StopRequest>> stopRequests,
            Viewport& viewport, 
+           std::shared_ptr<TerraGlide> terraGlide,
            double now) :
         m_window(window),
-        m_events(events),
-        m_stopRequests(stopRequests),
         m_viewport(viewport),
         m_lastTimestamp(now)
     {
@@ -36,9 +31,7 @@ public:
     Kernel(const Kernel&) = delete;
     Kernel& operator=(const Kernel&) = delete;
 
-    void applyGlobalSettings() const noexcept;
     void renderLoop() noexcept;
-    void scanRequests() noexcept;
 
     void setViewport(int width, int height) noexcept
     {
@@ -47,8 +40,8 @@ public:
 
 private:
     GLFWwindow* m_window; // Plain old pointer.
-    std::shared_ptr<Link<Event>> m_events;
-    std::shared_ptr<Link<StopRequest>> m_stopRequests;
     Viewport m_viewport;
+    std::shared_ptr<TerraGlide> m_terraGlide;
     double m_lastTimestamp;
+
 };

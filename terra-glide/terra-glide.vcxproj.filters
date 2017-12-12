@@ -38,14 +38,5 @@
     <ClInclude Include="TerraGlide.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Link.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Request.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

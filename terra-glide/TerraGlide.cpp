@@ -1,48 +1,23 @@
-#include "Event.h"
-#include "Link.h"
 #include "TerraGlide.h"
 #include "Viewport.h"
+#include <glad\glad.h>
 #include <iostream>
 
-void TerraGlide::run() noexcept
+TerraGlideStatus TerraGlide::setup() noexcept
 {
-    while (m_running)
-    {
-        Event&& event = m_events->receive();
-        switch (event.eventType)
-        {
-        case EventType::Frame:
-        {
-            auto viewport = std::make_tuple(event.eventData.frameData.width, event.eventData.frameData.height);
-            frame(viewport, event.eventData.frameData.frameDuration);
-        }
-            break;
-
-        case EventType::Quit:
-            std::cout << "TerraGlide::run(). Quit" << std::endl;
-            m_running = false;
-            break;
-
-        default:
-            std::cout << "TerraGlide::run(): unknown eventType" << std::endl;
-            break;
-        }
-    }
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    return TerraGlideStatus::Continue;
 }
 
-void TerraGlide::frame(const Viewport& viewport, double duration) noexcept
+TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) noexcept
 {
-    //std::cout << "TerraGlide::frame() - " << duration << std::endl;
-    ++dummy;
-    if (dummy == 300)
-    {
-        std::cout << "Frame 300. Stop\n";
-        stop();
-    }
+    auto[width, height] = viewport;
+    glViewport(0, 0, width, height);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    return TerraGlideStatus::Continue;
 }
 
-void TerraGlide::stop() noexcept
+void TerraGlide::teardown() noexcept
 {
-    m_stopRequests->post(0);
-    m_running = false;
 }
