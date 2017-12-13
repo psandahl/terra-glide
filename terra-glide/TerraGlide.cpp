@@ -7,10 +7,10 @@
 
 TerraGlideStatus TerraGlide::setup() noexcept
 {
-    auto dummyProgram = makeProgram({ {ShaderType::Vertex, "dummy.vert"} });
+    auto dummyProgram = makeProgram({ {ShaderType::Vertex, "resources/shaders/dummy-vert.glsl"} });
     if (std::holds_alternative<std::string>(dummyProgram))
     {
-        std::cerr << "Error: " << std::get<std::string>(dummyProgram) << std::endl;
+        std::cerr << "Error: " << std::get<0>(dummyProgram) << std::endl;
         return TerraGlideStatus::Stop;
     }
 
