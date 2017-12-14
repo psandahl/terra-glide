@@ -16,6 +16,7 @@ TerraGlideStatus TerraGlide::setup() noexcept
         return TerraGlideStatus::Stop;
     }
 
+    std::cout << "Yay!\n";
     m_dummyProgram = std::get<1>(dummyProgram);
 
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);

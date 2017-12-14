@@ -54,15 +54,13 @@ makeProgram(const std::vector<ShaderRequest>& requests)
     auto result = linkShaders(shaders);
     if (std::holds_alternative<GLuint>(result))
     {
-
+        auto program = std::make_shared<Program>(std::get<1>(result));
+        return { program };
     }
     else
     {
         return { std::get<0>(result) };
     }
-
-    auto retval("Bad horsie");
-    return retval;
 }
 
 std::optional<std::string> fromFile(const std::string& filename)
