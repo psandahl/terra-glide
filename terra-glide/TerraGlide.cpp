@@ -7,7 +7,9 @@
 
 TerraGlideStatus TerraGlide::setup() noexcept
 {
-    auto dummyProgram = makeProgram({ {ShaderType::Vertex, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\dummy-vert.glsl"} });
+    auto dummyProgram = makeProgram({ {ShaderType::Vertex, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\dummy.vert"},
+                                      { ShaderType::Fragment, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\dummy.frag" }
+                                    });
     if (std::holds_alternative<std::string>(dummyProgram))
     {
         std::cerr << "Error: " << std::get<0>(dummyProgram) << std::endl;

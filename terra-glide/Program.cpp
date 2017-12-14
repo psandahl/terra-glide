@@ -18,6 +18,7 @@ struct ShaderRequest2
 std::optional<std::string> fromFile(const std::string& filename);
 GLenum fromShaderType(ShaderType shaderType);
 std::variant<std::string, GLuint> compileShader(const ShaderRequest2& request);
+std::variant<std::string, GLuint> linkShaders(const std::vector<GLuint>& shaders);
 
 std::variant<std::string, std::shared_ptr<Program>>
 makeProgram(const std::vector<ShaderRequest>& requests)
@@ -48,6 +49,16 @@ makeProgram(const std::vector<ShaderRequest>& requests)
         {
             return { request.filename + ": " + std::get<0>(result) }; 
         }
+    }
+
+    auto result = linkShaders(shaders);
+    if (std::holds_alternative<GLuint>(result))
+    {
+
+    }
+    else
+    {
+        return { std::get<0>(result) };
     }
 
     auto retval("Bad horsie");
@@ -101,6 +112,42 @@ std::variant<std::string, GLuint> compileShader(const ShaderRequest2& request)
     {
         GLchar infoLog[500];
         glGetShaderInfoLog(shader, 500, nullptr, infoLog);
+        return { infoLog };
+    }
+}
+
+std::variant<std::string, GLuint> linkShaders(const std::vector<GLuint>& shaders)
+{
+    auto program = glCreateProgram();
+    for (auto shader : shaders)
+    {
+        glAttachShader(program, shader);
+    }
+    glLinkProgram(program);
+
+    GLint status;
+    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    if (status == GL_TRUE)
+    {
+        for (auto shader : shaders)
+        {
+            glDetachShader(program, shader);
+            glDeleteShader(shader);
+        }
+
+        return { program };
+    }
+    else
+    {
+        GLchar infoLog[500];
+        glGetProgramInfoLog(program, 500, nullptr, infoLog);
+
+        for (auto shader : shaders)
+        {
+            glDeleteShader(shader);
+        }
+        glDeleteProgram(program);
+
         return { infoLog };
     }
 }
