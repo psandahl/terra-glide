@@ -4,6 +4,7 @@
 #include "Viewport.h"
 #include <glad\glad.h>
 #include <glm\vec3.hpp>
+#include <glm\mat4x4.hpp>
 #include <iostream>
 #include <variant>
 #include <vector>
@@ -34,7 +35,12 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) no
     setViewport(viewport);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    auto persp = perspectiveViewport(viewport);
+    auto view = m_camera.matrix();
+    auto mvp = persp * view;
+
     m_dummyProgram->enable();
+    m_dummyProgram->setUniform("mvp", mvp);
     m_dummyProgram->setUniform("fragColor", glm::vec3(0, 0, 1));
     m_dummyMesh->enable();
     m_dummyMesh->render();
@@ -66,7 +72,7 @@ void TerraGlide::initialSettings() noexcept
 std::shared_ptr<Mesh> makeDummyMesh()
 {
     std::vector<VertexWithPosition> points({ {glm::vec3(0, 1, 0)},
-                                             {glm::vec3(-1, -1, 1)},
+                                             {glm::vec3(-1, -1, 0)},
                                              {glm::vec3(1, -1, 0)}
                                            });
     VerticesWithPosition vertices(points);
