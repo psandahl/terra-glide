@@ -46,6 +46,14 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) no
 
 void TerraGlide::teardown() noexcept
 {
+    if (m_dummyProgram != nullptr)
+    {
+        m_dummyProgram->release();
+    }
+    if (m_dummyMesh != nullptr)
+    {
+        m_dummyMesh->release();
+    }
 }
 
 void TerraGlide::initialSettings() noexcept
