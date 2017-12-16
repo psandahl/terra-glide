@@ -8,7 +8,7 @@
 
 enum class ShaderType
 {
-    Fragment = 0,
+    Fragment,
     Vertex
 };
 

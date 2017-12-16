@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Mesh.h"
 #include "Program.h"
 #include "Viewport.h"
 #include <memory>
 
 enum class TerraGlideStatus
 {
-    Continue = 0,
+    Continue,
     Stop
 };
 

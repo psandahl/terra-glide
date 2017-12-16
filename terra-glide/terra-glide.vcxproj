@@ -121,11 +121,14 @@
     <ClCompile Include="..\..\..\..\3pp\src\glad.c" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="TerraGlide.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attributes.h" />
     <ClInclude Include="Kernel.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="TerraGlide.h" />
     <ClInclude Include="Viewport.h" />
