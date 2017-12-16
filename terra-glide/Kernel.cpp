@@ -30,16 +30,15 @@ int runTerraGlide(Viewport initialViewport)
         return -1;
     }
 
-    // Let the Kernel and the TerraGlide objects live on the heap.
-    auto terraGlide = std::make_shared<TerraGlide>();
-    auto kernel = std::make_shared<Kernel>(window, initialViewport, 
-                                           terraGlide, glfwGetTime());
+    // Let the Kernel and the TerraGlide objects live on the stack.
+    TerraGlide terraGlide;
+    Kernel kernel(window, initialViewport, terraGlide, glfwGetTime());
 
     // Set the global Kernel pointer and register callbacks.
-    g_kernel = kernel.get();
+    g_kernel = &kernel;
 
     // Setup TerraGlide stuff.
-    if (terraGlide->setup() == TerraGlideStatus::Stop)
+    if (terraGlide.setup() == TerraGlideStatus::Stop)
     {
         std::cerr << "TerraGlide: Application setup failed.\n";
         glfwTerminate();
@@ -50,10 +49,10 @@ int runTerraGlide(Viewport initialViewport)
     glfwSetWindowSizeCallback(window, windowSizeCallback);
 
     // Run the render loop.
-    kernel->renderLoop();
+    kernel.renderLoop();
 
     // Teardown the TerraGlide.
-    terraGlide->teardown();
+    terraGlide.teardown();
 
     // Close OpenGL.
     glfwTerminate();
@@ -70,7 +69,7 @@ void Kernel::renderLoop() noexcept
         auto frameDuration = now - m_lastTimestamp;
         m_lastTimestamp = now;
 
-        if (m_terraGlide->frame(m_viewport, now) == TerraGlideStatus::Stop)
+        if (m_terraGlide.frame(m_viewport, now) == TerraGlideStatus::Stop)
         {
             break;
         }

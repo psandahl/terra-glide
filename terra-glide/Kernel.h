@@ -4,7 +4,6 @@
 #include "Viewport.h"
 #include <glad\glad.h>
 #include <GLFW\glfw3.h>
-#include <memory>
 
 /// <summary>
 /// The bootstrapping function for TerraGlide. The function will run
@@ -17,10 +16,11 @@ class Kernel
 public:
     Kernel(GLFWwindow* window, 
            Viewport& viewport, 
-           std::shared_ptr<TerraGlide> terraGlide,
+           TerraGlide& terraGlide,
            double now) :
         m_window(window),
         m_viewport(viewport),
+        m_terraGlide(terraGlide),
         m_lastTimestamp(now)
     {
     }
@@ -41,7 +41,7 @@ public:
 private:
     GLFWwindow* m_window; // Plain old pointer.
     Viewport m_viewport;
-    std::shared_ptr<TerraGlide> m_terraGlide;
+    TerraGlide& m_terraGlide;
     double m_lastTimestamp;
 
 };
