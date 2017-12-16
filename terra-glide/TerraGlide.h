@@ -26,6 +26,8 @@ public:
     void teardown() noexcept;
 
 private:
+    static void initialSettings();
+
     std::shared_ptr<Program> m_dummyProgram;
     std::shared_ptr<Mesh> m_dummyMesh;
 };

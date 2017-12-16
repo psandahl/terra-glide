@@ -24,8 +24,7 @@ TerraGlideStatus TerraGlide::setup() noexcept
     
     m_dummyMesh = makeDummyMesh();
 
-
-    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    initialSettings();
 
     return TerraGlideStatus::Continue;
 }
@@ -34,7 +33,7 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) no
 {
     auto[width, height] = viewport;
     glViewport(0, 0, width, height);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_dummyProgram->enable();
     m_dummyProgram->setUniform("fragColor", glm::vec3(0, 0, 1));
@@ -48,6 +47,13 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) no
 
 void TerraGlide::teardown() noexcept
 {
+}
+
+void TerraGlide::initialSettings()
+{
+    glClearColor(114.0f / 255.0f, 171.0f / 255.0f, 245.0f / 255.0f, 0);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 }
 
 std::shared_ptr<Mesh> makeDummyMesh()
