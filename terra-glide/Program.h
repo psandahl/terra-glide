@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glad\glad.h>
+#include <glm\vec3.hpp>
+#include <glm\gtc\type_ptr.hpp>
 #include <memory>
 #include <string>
 #include <variant>
@@ -32,7 +34,7 @@ public:
         m_program(program)
     {}
     Program(const Program&) = default;
-    ~Program() { std::cerr << "Die!";  }
+    ~Program() = default;
 
     Program& operator=(const Program&) = default;
 
@@ -54,6 +56,13 @@ public:
             m_program = 0;
         }
     }
+
+    void setUniform(const std::string& name, const glm::vec3& vec) const noexcept
+    {
+        auto loc = glGetUniformLocation(m_program, name.c_str());
+        glUniform3fv(loc, 1, glm::value_ptr(vec));
+    }
+
 private:
     GLuint m_program;
 };

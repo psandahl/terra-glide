@@ -37,6 +37,7 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) no
     glClear(GL_COLOR_BUFFER_BIT);
 
     m_dummyProgram->enable();
+    m_dummyProgram->setUniform("fragColor", glm::vec3(0, 0, 1));
     m_dummyMesh->enable();
     m_dummyMesh->render();
     m_dummyMesh->disable();
