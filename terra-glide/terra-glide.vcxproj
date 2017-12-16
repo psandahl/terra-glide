@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>D:\Users\patri\3pp\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\patri\3pp\Libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\Users\patri\3pp\Libs\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
