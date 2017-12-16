@@ -3,6 +3,7 @@
 #include "Mesh.h"
 #include "Program.h"
 #include "Viewport.h"
+#include "Vertex.h"
 #include <memory>
 
 enum class TerraGlideStatus
