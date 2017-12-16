@@ -16,11 +16,10 @@ class TerraGlide
 {
 public:
     TerraGlide() = default;
-    TerraGlide(const TerraGlide&) = delete;
-    TerraGlide(const TerraGlide&&) = delete;
+    TerraGlide(const TerraGlide&) = default;
     ~TerraGlide() = default;
 
-    TerraGlide& operator=(const TerraGlide&) = delete;
+    TerraGlide& operator=(const TerraGlide&) = default;
 
     TerraGlideStatus setup() noexcept;
     TerraGlideStatus frame(const Viewport& viewport, double duration) noexcept;
@@ -28,4 +27,5 @@ public:
 
 private:
     std::shared_ptr<Program> m_dummyProgram;
+    std::shared_ptr<Mesh> m_dummyMesh;
 };

@@ -5,6 +5,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <iostream>
 
 enum class ShaderType
 {
@@ -31,7 +32,7 @@ public:
         m_program(program)
     {}
     Program(const Program&) = default;
-    ~Program() = default;
+    ~Program() { std::cerr << "Die!";  }
 
     Program& operator=(const Program&) = default;
 
