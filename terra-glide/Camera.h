@@ -12,6 +12,9 @@ struct Direction
 
 class Camera
 {
+public:
+    Camera() = delete;
+
     // Construct a Camera from a position, a direction where to look and a
     // direction where to move.
     Camera(const glm::vec3& position,
@@ -28,7 +31,7 @@ class Camera
     Camera(const Camera&) = default;
     ~Camera() = default;
 
-    Camera& operator=(const Camera&) = delete;
+    Camera& operator=(const Camera&) = default;
 
     // From the Camera, produce a view matrix.
     glm::mat4 matrix() const noexcept
