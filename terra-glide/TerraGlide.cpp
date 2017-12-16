@@ -31,8 +31,7 @@ TerraGlideStatus TerraGlide::setup() noexcept
 
 TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) noexcept
 {
-    auto[width, height] = viewport;
-    glViewport(0, 0, width, height);
+    setViewport(viewport);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_dummyProgram->enable();
@@ -49,7 +48,7 @@ void TerraGlide::teardown() noexcept
 {
 }
 
-void TerraGlide::initialSettings()
+void TerraGlide::initialSettings() noexcept
 {
     glClearColor(114.0f / 255.0f, 171.0f / 255.0f, 245.0f / 255.0f, 0);
     glEnable(GL_DEPTH_TEST);
