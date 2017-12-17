@@ -31,6 +31,8 @@ public:
 
     TerraGlideStatus setup() noexcept;
     TerraGlideStatus frame(const Viewport& viewport, double duration) noexcept;
+    void keyDown(int key) noexcept;
+    void keyUp(int key) noexcept;
     void teardown() noexcept;
 
 private:

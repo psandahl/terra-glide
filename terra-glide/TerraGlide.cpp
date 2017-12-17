@@ -50,6 +50,16 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) no
     return TerraGlideStatus::Continue;
 }
 
+void TerraGlide::keyDown(int key) noexcept
+{
+    std::cout << "Press: " << key << std::endl;
+}
+
+void TerraGlide::keyUp(int key) noexcept
+{
+    std::cout << "Release: " << key << std::endl;
+}
+
 void TerraGlide::teardown() noexcept
 {
     if (m_dummyProgram != nullptr)

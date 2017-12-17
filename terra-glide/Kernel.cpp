@@ -7,10 +7,11 @@
 
 GLFWwindow* createGLContext(const Viewport& initialViewport);
 void windowSizeCallback(GLFWwindow* window, int width, int height);
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-// In order to handle callbacks we must have a plain old pointer. But
-// don't worry, once set if will never change to any other object.
+// In order to handle callbacks we need som plain old pointers.
 Kernel* g_kernel = nullptr;
+TerraGlide* g_terraGlide = nullptr;
 
 int runTerraGlide(Viewport initialViewport)
 {
@@ -34,8 +35,9 @@ int runTerraGlide(Viewport initialViewport)
     TerraGlide terraGlide;
     Kernel kernel(window, initialViewport, terraGlide, glfwGetTime());
 
-    // Set the global Kernel pointer and register callbacks.
+    // Set the global pointers.
     g_kernel = &kernel;
+    g_terraGlide = &terraGlide;
 
     // Setup TerraGlide stuff.
     if (terraGlide.setup() == TerraGlideStatus::Stop)
@@ -45,14 +47,19 @@ int runTerraGlide(Viewport initialViewport)
         return -1;
     }
 
-    // Set the window size callback.
+    // Register callbacks.
     glfwSetWindowSizeCallback(window, windowSizeCallback);
+    glfwSetKeyCallback(window, keyCallback);
 
     // Run the render loop.
     kernel.renderLoop();
 
     // Teardown the TerraGlide.
     terraGlide.teardown();
+
+    // Unregister callbacks.
+    glfwSetWindowSizeCallback(window, nullptr);
+    glfwSetKeyCallback(window, nullptr);
 
     // Close OpenGL.
     glfwTerminate();
@@ -120,4 +127,16 @@ void windowSizeCallback(GLFWwindow* window, int width, int height)
 {
     std::cout << "Callback. New size: " << width << ", " << height << std::endl;
     g_kernel->setViewport(width, height);
+}
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (action == GLFW_PRESS)
+    {
+        g_terraGlide->keyDown(key);
+    }
+    else if (action == GLFW_RELEASE)
+    {
+        g_terraGlide->keyUp(key);
+    }
 }
