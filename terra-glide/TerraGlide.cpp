@@ -60,6 +60,21 @@ void TerraGlide::keyUp(int key) noexcept
     std::cout << "Release: " << key << std::endl;
 }
 
+void TerraGlide::leftButtonDown(double xpos, double ypos) noexcept
+{
+    std::cout << "Mouse press: " << xpos << " " << ypos << std::endl;
+}
+
+void TerraGlide::leftButtonUp(double xpos, double ypos) noexcept
+{
+    std::cout << "Mouse release: " << xpos << " " << ypos << std::endl;
+}
+
+void TerraGlide::cursorPos(double xpos, double ypos) noexcept
+{
+    std::cout << "Cursor pos: " << xpos << " " << ypos << std::endl;
+}
+
 void TerraGlide::teardown() noexcept
 {
     if (m_dummyProgram != nullptr)

@@ -8,6 +8,8 @@
 GLFWwindow* createGLContext(const Viewport& initialViewport);
 void windowSizeCallback(GLFWwindow* window, int width, int height);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+void cursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 
 // In order to handle callbacks we need som plain old pointers.
 Kernel* g_kernel = nullptr;
@@ -50,6 +52,7 @@ int runTerraGlide(Viewport initialViewport)
     // Register callbacks.
     glfwSetWindowSizeCallback(window, windowSizeCallback);
     glfwSetKeyCallback(window, keyCallback);
+    glfwSetMouseButtonCallback(window, mouseButtonCallback);
 
     // Run the render loop.
     kernel.renderLoop();
@@ -60,6 +63,8 @@ int runTerraGlide(Viewport initialViewport)
     // Unregister callbacks.
     glfwSetWindowSizeCallback(window, nullptr);
     glfwSetKeyCallback(window, nullptr);
+    glfwSetMouseButtonCallback(window, nullptr);
+    glfwSetCursorPosCallback(window, nullptr);
 
     // Close OpenGL.
     glfwTerminate();
@@ -139,4 +144,27 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     {
         g_terraGlide->keyUp(key);
     }
+}
+
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+        g_terraGlide->leftButtonDown(xpos, ypos);
+        glfwSetCursorPosCallback(window, cursorPosCallback);
+    }
+    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+    {
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+        g_terraGlide->leftButtonUp(xpos, ypos);
+        glfwSetCursorPosCallback(window, nullptr);
+    }
+}
+
+void cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+{
+    g_terraGlide->cursorPos(xpos, ypos);
 }

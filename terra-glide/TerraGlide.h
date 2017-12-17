@@ -33,6 +33,9 @@ public:
     TerraGlideStatus frame(const Viewport& viewport, double duration) noexcept;
     void keyDown(int key) noexcept;
     void keyUp(int key) noexcept;
+    void leftButtonDown(double xpos, double ypos) noexcept;
+    void leftButtonUp(double xpos, double ypos) noexcept;
+    void cursorPos(double xpos, double ypos) noexcept;
     void teardown() noexcept;
 
 private:
