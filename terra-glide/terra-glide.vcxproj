@@ -136,6 +136,8 @@
   <ItemGroup>
     <ClInclude Include="Attributes.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraNavigation.h" />
+    <ClInclude Include="Environment.h" />
     <ClInclude Include="Kernel.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Program.h" />

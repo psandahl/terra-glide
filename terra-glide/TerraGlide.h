@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Camera.h"
+#include "CameraNavigation.h"
+#include "Environment.h"
 #include "Mesh.h"
 #include "Program.h"
 #include "Viewport.h"
@@ -21,6 +23,8 @@ class TerraGlide
 public:
     TerraGlide():
         m_camera(initialCamera()),
+        m_cameraNavigation(),
+        m_environment(),
         m_dummyProgram(),
         m_dummyMesh()
     {}
@@ -57,8 +61,9 @@ private:
         glViewport(0, 0, width, height);
     }
 
-    //Camera m_mainCamera;
     Camera m_camera;
+    CameraNavigation m_cameraNavigation;
+    Environment m_environment;
     std::shared_ptr<Program> m_dummyProgram;
     std::shared_ptr<Mesh> m_dummyMesh;
 };
