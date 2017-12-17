@@ -31,9 +31,9 @@ TerraGlideStatus TerraGlide::setup() noexcept
     return TerraGlideStatus::Continue;
 }
 
-TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) noexcept
+TerraGlideStatus TerraGlide::frame(const Viewport& viewport, float duration) noexcept
 {
-    m_camera.animate(m_environment, m_cameraNavigation, static_cast<float>(duration));
+    m_camera.animate(m_environment, m_cameraNavigation, duration);
 
     setViewport(viewport);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -81,7 +81,7 @@ void Kernel::renderLoop() noexcept
         auto frameDuration = now - m_lastTimestamp;
         m_lastTimestamp = now;
 
-        if (m_terraGlide.frame(m_viewport, frameDuration) == TerraGlideStatus::Stop)
+        if (m_terraGlide.frame(m_viewport, static_cast<float>(frameDuration)) == TerraGlideStatus::Stop)
         {
             break;
         }
