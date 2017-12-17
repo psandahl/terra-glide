@@ -1,6 +1,26 @@
 #include "Camera.h"
+#include "CameraNavigation.h"
+#include "Environment.h"
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
+
+void Camera::animate(const Environment& environment,
+    const CameraNavigation& navigation,
+    float duration) noexcept
+{
+    auto distance = duration * environment.moveSpeed();
+
+    if (navigation.moveForward())
+    {
+        moveForward(distance);
+    }
+
+    if (navigation.moveBackward())
+    {
+        moveBackward(distance);
+    }
+}
 
 glm::vec3 Camera::fromEulerAngles(float heading, float elevation)
 {

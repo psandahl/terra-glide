@@ -3,6 +3,7 @@
 #include "Vertex.h"
 #include "Viewport.h"
 #include <glad\glad.h>
+#include <GLFW\glfw3.h>
 #include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
 #include <iostream>
@@ -32,6 +33,8 @@ TerraGlideStatus TerraGlide::setup() noexcept
 
 TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) noexcept
 {
+    m_camera.animate(m_environment, m_cameraNavigation, static_cast<float>(duration));
+
     setViewport(viewport);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -52,27 +55,38 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, double duration) no
 
 void TerraGlide::keyDown(int key) noexcept
 {
-    std::cout << "Press: " << key << std::endl;
+    if (key == GLFW_KEY_UP)
+    {
+        m_cameraNavigation.setMoveForward(true);
+    }
+    else if (key == GLFW_KEY_DOWN)
+    {
+        m_cameraNavigation.setMoveBackward(true);
+    }
 }
 
 void TerraGlide::keyUp(int key) noexcept
 {
-    std::cout << "Release: " << key << std::endl;
+    if (key == GLFW_KEY_UP)
+    {
+        m_cameraNavigation.setMoveForward(false);
+    }
+    else if (key == GLFW_KEY_DOWN)
+    {
+        m_cameraNavigation.setMoveBackward(false);
+    }
 }
 
 void TerraGlide::leftButtonDown(double xpos, double ypos) noexcept
 {
-    std::cout << "Mouse press: " << xpos << " " << ypos << std::endl;
 }
 
 void TerraGlide::leftButtonUp(double xpos, double ypos) noexcept
 {
-    std::cout << "Mouse release: " << xpos << " " << ypos << std::endl;
 }
 
 void TerraGlide::cursorPos(double xpos, double ypos) noexcept
 {
-    std::cout << "Cursor pos: " << xpos << " " << ypos << std::endl;
 }
 
 void TerraGlide::teardown() noexcept

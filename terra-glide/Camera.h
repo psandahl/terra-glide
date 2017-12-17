@@ -1,9 +1,14 @@
 #pragma once
 
+#include "CameraNavigation.h"
+#include "Environment.h"
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+// Direction; heading and elevation in radians. Zero heading
+// points in positive z direction. Positive elevation points
+// above horizon.
 struct Direction
 {
     float heading;
@@ -45,15 +50,20 @@ public:
     // given distance.
     void moveForward(float distance) noexcept
     {
-        m_position = moveTo(m_position, m_moveVector, Vista);
+        m_position = moveTo(m_position, m_moveVector, distance);
     }
 
     // Move the Camera position backward according to the move vector and
     // the given distance.
     void moveBackward(float distance) noexcept
     {
-        m_position = moveTo(m_position, -m_moveVector, Vista);
+        m_position = moveTo(m_position, -m_moveVector, distance);
     }
+
+    // Animate the camera according to the duration.
+    void animate(const Environment& environment,
+        const CameraNavigation& navigation,
+        float duration) noexcept;
 
 private:
     // From heading and elevation angles make a 3D vector representing the
@@ -70,7 +80,7 @@ private:
         return position + (direction * distance);
     }
 
-    static constexpr float Vista = 10;
+    static constexpr float Vista = 10.0f;
 
     glm::vec3 m_position;
     glm::vec3 m_viewVector;

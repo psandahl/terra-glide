@@ -4,7 +4,7 @@ class Environment
 {
 public:
     Environment():
-        m_moveSpeed(1)
+        m_moveSpeed(2)
     {}
 
     Environment(const Environment&) = default;
