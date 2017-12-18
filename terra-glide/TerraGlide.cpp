@@ -4,8 +4,10 @@
 #include "Viewport.h"
 #include <glad\glad.h>
 #include <GLFW\glfw3.h>
+#include <glm\vec2.hpp>
 #include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
+#include <cstdlib>
 #include <iostream>
 #include <variant>
 #include <vector>
@@ -109,16 +111,32 @@ void TerraGlide::keyUp(int key) noexcept
     }
 }
 
-void TerraGlide::leftButtonDown(double xpos, double ypos) noexcept
+void TerraGlide::leftButtonDown(const glm::vec2& pos) noexcept
 {
+    m_cameraNavigation.setCursorPos(pos);
 }
 
-void TerraGlide::leftButtonUp(double xpos, double ypos) noexcept
+void TerraGlide::cursorPos(const glm::vec2& pos) noexcept
 {
-}
+    const auto& oldPos = m_cameraNavigation.cursorPos();
+    if (auto xDelta = pos.x - oldPos.x; xDelta < 0)
+    {
+        m_camera.viewLeft(glm::radians(std::abs(xDelta)));
+    }
+    else
+    {
+        m_camera.viewRight(glm::radians(xDelta));
+    }
+    if (auto yDelta = pos.y - oldPos.y; yDelta < 0)
+    {
+        m_camera.viewDown(glm::radians(std::abs(yDelta)));
+    }
+    else
+    {
+        m_camera.viewUp(glm::radians(yDelta));
+    }
 
-void TerraGlide::cursorPos(double xpos, double ypos) noexcept
-{
+    m_cameraNavigation.setCursorPos(pos);
 }
 
 void TerraGlide::teardown() noexcept

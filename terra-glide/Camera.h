@@ -2,9 +2,11 @@
 
 #include "CameraNavigation.h"
 #include "Environment.h"
-#include <glm/vec3.hpp>
-#include <glm/mat4x4.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <glm\common.hpp>
+#include <glm\mat4x4.hpp>
+#include <glm\trigonometric.hpp>
+#include <glm\vec3.hpp>
+#include <glm\gtc\matrix_transform.hpp>
 
 // Direction; heading and elevation in radians. Zero heading
 // points in positive z direction. Positive elevation points
@@ -84,6 +86,30 @@ public:
         turn(theta);
     }
 
+    // Turn the view direction to the right using the given angle.
+    void viewRight(float theta) noexcept
+    {
+        changeViewHeading(-theta);
+    }
+
+    // Turn the view direction to the left using the given angle.
+    void viewLeft(float theta) noexcept
+    {
+        changeViewHeading(theta);
+    }
+
+    // Turn the view elevation up using the given angle.
+    void viewUp(float theta) noexcept
+    {
+        changeViewElevation(theta);
+    }
+
+    // Turn the view elevation down using the given angle.
+    void viewDown(float theta) noexcept
+    {
+        changeViewElevation(-theta);
+    }
+
     // Animate the camera according to the duration.
     void animate(const Environment& environment,
         const CameraNavigation& navigation,
@@ -96,6 +122,11 @@ private:
     // negative elevation is pointing below.
     // Angles are in radians.
     static glm::vec3 fromEulerAngles(float heading, float elevation);
+
+    static float clampElevation(float angle) noexcept
+    {
+        return glm::clamp(angle, -HalfPi + 0.01f, HalfPi - 0.01f);
+    }
 
     static glm::vec3 moveTo(const glm::vec3& position,
         const glm::vec3& direction,
@@ -117,6 +148,14 @@ private:
             m_viewDirection.elevation);
     }
 
+    void changeViewElevation(float theta) noexcept
+    {
+        m_viewDirection.elevation = 
+            clampElevation(m_viewDirection.elevation + theta);
+        m_viewVector = fromEulerAngles(m_viewDirection.heading, 
+            m_viewDirection.elevation);
+    }
+
     void changeMoveHeading(float theta) noexcept
     {
         m_moveDirection.heading += theta;
@@ -125,6 +164,7 @@ private:
     }
 
     static constexpr float Vista = 10.0f;
+    static constexpr float HalfPi = 3.14159265358979f / 2.0f;
 
     glm::vec3 m_position;
     glm::vec3 m_viewVector;

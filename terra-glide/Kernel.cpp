@@ -1,6 +1,7 @@
 #include "Kernel.h"
 #include "TerraGlide.h"
 #include "Viewport.h"
+#include <glm\vec2.hpp>
 #include <iostream>
 #include <memory>
 #include <tuple>
@@ -152,19 +153,16 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
     {
         double xpos, ypos;
         glfwGetCursorPos(window, &xpos, &ypos);
-        g_terraGlide->leftButtonDown(xpos, ypos);
+        g_terraGlide->leftButtonDown(glm::vec2(static_cast<float>(xpos), static_cast<float>(ypos)));
         glfwSetCursorPosCallback(window, cursorPosCallback);
     }
     else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
     {
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        g_terraGlide->leftButtonUp(xpos, ypos);
         glfwSetCursorPosCallback(window, nullptr);
     }
 }
 
 void cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 {
-    g_terraGlide->cursorPos(xpos, ypos);
+    g_terraGlide->cursorPos(glm::vec2(static_cast<float>(xpos), static_cast<float>(ypos)));
 }

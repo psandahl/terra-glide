@@ -7,6 +7,7 @@
 #include "Program.h"
 #include "Viewport.h"
 #include "Vertex.h"
+#include <glm\vec2.hpp>
 #include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -37,9 +38,8 @@ public:
     TerraGlideStatus frame(const Viewport& viewport, float duration) noexcept;
     void keyDown(int key) noexcept;
     void keyUp(int key) noexcept;
-    void leftButtonDown(double xpos, double ypos) noexcept;
-    void leftButtonUp(double xpos, double ypos) noexcept;
-    void cursorPos(double xpos, double ypos) noexcept;
+    void leftButtonDown(const glm::vec2& pos) noexcept;
+    void cursorPos(const glm::vec2& pos) noexcept;
     void teardown() noexcept;
 
 private:

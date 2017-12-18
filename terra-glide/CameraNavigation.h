@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm\vec2.hpp>
+
 class CameraNavigation
 {
 public:
@@ -9,7 +11,8 @@ public:
         m_moveUp(false),
         m_moveDown(false),
         m_turnLeft(false),
-        m_turnRight(false)
+        m_turnRight(false),
+        m_cursorPos(0)
     {}
 
     CameraNavigation(const CameraNavigation&) = default;
@@ -71,6 +74,15 @@ public:
         m_turnRight = value;
     }
 
+    const glm::vec2& cursorPos() const noexcept
+    {
+        return m_cursorPos;
+    }
+    void setCursorPos(const glm::vec2& value) noexcept
+    {
+        m_cursorPos = value;
+    }
+
 private:
     bool m_moveForward;
     bool m_moveBackward;
@@ -78,4 +90,5 @@ private:
     bool m_moveDown;
     bool m_turnLeft;
     bool m_turnRight;
+    glm::vec2 m_cursorPos;
 };
