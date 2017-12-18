@@ -60,6 +60,18 @@ public:
         m_position = moveTo(m_position, -m_moveVector, distance);
     }
 
+    // Move the camera up the given distance.
+    void moveUp(float distance) noexcept
+    {
+        m_position.y += distance;
+    }
+
+    // Move the camera down the given distance.
+    void moveDown(float distance) noexcept
+    {
+        m_position.y -= distance;
+    }
+
     // Animate the camera according to the duration.
     void animate(const Environment& environment,
         const CameraNavigation& navigation,

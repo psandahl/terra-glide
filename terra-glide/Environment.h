@@ -4,7 +4,8 @@ class Environment
 {
 public:
     Environment():
-        m_moveSpeed(2)
+        m_horizontalSpeed(2),
+        m_verticalSpeed(2)
     {}
 
     Environment(const Environment&) = default;
@@ -12,11 +13,17 @@ public:
 
     Environment& operator=(const Environment&) = default;
 
-    float moveSpeed() const noexcept
+    float horizontalSpeed() const noexcept
     {
-        return m_moveSpeed;
+        return m_horizontalSpeed;
+    }
+
+    float verticalSpeed() const noexcept
+    {
+        return m_verticalSpeed;
     }
 
 private:
-    float m_moveSpeed;
+    float m_horizontalSpeed;
+    float m_verticalSpeed;
 };

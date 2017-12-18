@@ -9,16 +9,24 @@ void Camera::animate(const Environment& environment,
     const CameraNavigation& navigation,
     float duration) noexcept
 {
-    auto distance = duration * environment.moveSpeed();
-
     if (navigation.moveForward())
     {
-        moveForward(distance);
+        moveForward(duration * environment.horizontalSpeed());
     }
 
     if (navigation.moveBackward())
     {
-        moveBackward(distance);
+        moveBackward(duration * environment.horizontalSpeed());
+    }
+
+    if (navigation.moveUp())
+    {
+        moveUp(duration * environment.verticalSpeed());
+    }
+
+    if (navigation.moveDown())
+    {
+        moveDown(duration * environment.verticalSpeed());
     }
 }
 
