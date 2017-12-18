@@ -71,6 +71,14 @@ void TerraGlide::keyDown(int key) noexcept
     {
         m_cameraNavigation.setMoveDown(true);
     }
+    else if (key == GLFW_KEY_LEFT)
+    {
+        m_cameraNavigation.setTurnLeft(true);
+    }
+    else if (key == GLFW_KEY_RIGHT)
+    {
+        m_cameraNavigation.setTurnRight(true);
+    }
 }
 
 void TerraGlide::keyUp(int key) noexcept
@@ -90,6 +98,14 @@ void TerraGlide::keyUp(int key) noexcept
     else if (key == GLFW_KEY_PAGE_DOWN)
     {
         m_cameraNavigation.setMoveDown(false);
+    }
+    else if (key == GLFW_KEY_LEFT)
+    {
+        m_cameraNavigation.setTurnLeft(false);
+    }
+    else if (key == GLFW_KEY_RIGHT)
+    {
+        m_cameraNavigation.setTurnRight(false);
     }
 }
 

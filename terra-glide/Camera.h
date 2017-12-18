@@ -72,6 +72,18 @@ public:
         m_position.y -= distance;
     }
 
+    // Turn the move and view directions to the right using the given angle.
+    void turnRight(float theta) noexcept
+    {
+        turn(-theta);
+    }
+
+    // Turn the move and view directions to left using the given angle.
+    void turnLeft(float theta) noexcept
+    {
+        turn(theta);
+    }
+
     // Animate the camera according to the duration.
     void animate(const Environment& environment,
         const CameraNavigation& navigation,
@@ -90,6 +102,26 @@ private:
         float distance)
     {
         return position + (direction * distance);
+    }
+
+    void turn(float theta) noexcept
+    {
+        changeMoveHeading(theta);
+        changeViewHeading(theta);
+    }
+
+    void changeViewHeading(float theta) noexcept
+    {
+        m_viewDirection.heading += theta;
+        m_viewVector = fromEulerAngles(m_viewDirection.heading, 
+            m_viewDirection.elevation);
+    }
+
+    void changeMoveHeading(float theta) noexcept
+    {
+        m_moveDirection.heading += theta;
+        m_moveVector = fromEulerAngles(m_moveDirection.heading, 
+            m_moveDirection.elevation);
     }
 
     static constexpr float Vista = 10.0f;

@@ -7,7 +7,9 @@ public:
         m_moveForward(false),
         m_moveBackward(false),
         m_moveUp(false),
-        m_moveDown(false)
+        m_moveDown(false),
+        m_turnLeft(false),
+        m_turnRight(false)
     {}
 
     CameraNavigation(const CameraNavigation&) = default;
@@ -51,9 +53,29 @@ public:
         m_moveDown = value;
     }
 
+    bool turnLeft() const noexcept
+    {
+        return m_turnLeft;
+    }
+    void setTurnLeft(bool value) noexcept
+    {
+        m_turnLeft = value;
+    }
+
+    bool turnRight() const noexcept
+    {
+        return m_turnRight;
+    }
+    void setTurnRight(bool value) noexcept
+    {
+        m_turnRight = value;
+    }
+
 private:
     bool m_moveForward;
     bool m_moveBackward;
     bool m_moveUp;
     bool m_moveDown;
+    bool m_turnLeft;
+    bool m_turnRight;
 };

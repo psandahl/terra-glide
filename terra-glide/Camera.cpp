@@ -28,6 +28,16 @@ void Camera::animate(const Environment& environment,
     {
         moveDown(duration * environment.verticalSpeed());
     }
+
+    if (navigation.turnLeft())
+    {
+        turnLeft(duration * environment.rotationSpeed());
+    }
+
+    if (navigation.turnRight())
+    {
+        turnRight(duration * environment.rotationSpeed());
+    }
 }
 
 glm::vec3 Camera::fromEulerAngles(float heading, float elevation)
