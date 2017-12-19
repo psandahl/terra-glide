@@ -2,8 +2,19 @@
 #include "Tile.h"
 #include <glm\vec3.hpp>
 #include <iostream>
+#include <vector>
 
-void Terrain::prepare(const glm::vec3& position) noexcept
+void Terrain::prepare(const glm::vec3& position)
+{
+    std::vector<TileAddress> wantedSet;
+    calcWantedSet(position, wantedSet);
+
+    std::vector<TileAddress> purgeSet;
+    calcPurgeSet(wantedSet, m_currentTileAddresses, purgeSet);
+}
+
+void Terrain::calcWantedSet(const glm::vec3& position,
+    std::vector<TileAddress>& wantedSet) const
 {
     auto xpos = position.x;
     auto zpos = position.z;
@@ -18,12 +29,13 @@ void Terrain::prepare(const glm::vec3& position) noexcept
     {
         for (auto x = startx; x < endx; x += stride)
         {
-            auto[tilex, tilez] = Tile::tileAddress(x, z);
-            //std::cout << "Raw coords x: " << x << ", z: " << z << std::endl;
-            std::cout << "Tile with start x: " << tilex << ", z: " << tilez << std::endl;
+            wantedSet.push_back(Tile::mkTileAddress(x, z));
         }
     }
+}
 
-    //std::cout << "stride: " << stride << std::endl;
-    //std::cout << "tiles: " << tiles << std::endl;
+void Terrain::calcPurgeSet(const std::vector<TileAddress>& wantedSet,
+    const std::vector<TileAddress>& currentSet,
+    std::vector<TileAddress>& purgeSet) const
+{
 }
