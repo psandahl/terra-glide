@@ -13,7 +13,9 @@ int main()
     //std::cout << x << ", " << z << std::endl;
     Terrain t;
 
-    t.prepare(glm::vec3(20.0f));
+    t.prepare(glm::vec3(20.0f, 0.0f, 20.0f));
+    t.prepare(glm::vec3(20.0f, 0.0f, 19.0f));
+    t.prepare(glm::vec3(20.0f, 0.0f, 18.0f));
 
     return 0;
 }
