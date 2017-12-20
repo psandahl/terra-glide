@@ -1,7 +1,9 @@
 #pragma once
 
+#include <glad\glad.h>
 #include <glm\common.hpp>
 #include <tuple>
+#include <vector>
 
 using TileAddress = std::tuple<int, int>;
 
@@ -34,6 +36,25 @@ public:
         auto z = glm::clamp(static_cast<int>(zpos), 0, TileSquares * MaxTiles);
         return { (x / TileSquares) * TileSquares, 
                  (z / TileSquares) * TileSquares };
+    }
+
+    // Make indices for the tiles.
+    static std::vector<GLuint> mkIndices()
+    {
+        std::vector<GLuint> indices(TileSquares * TileSquares * 6);
+        indices.clear();
+        for (auto square = 0; square < TileSquares * TileSquares; ++square)
+        {
+            auto startVert = (square / TileSquares) * (TileSquares + 1) + (square % TileSquares);
+            indices.push_back(startVert + 1);
+            indices.push_back(startVert);
+            indices.push_back(startVert + TileSquares + 1);
+            indices.push_back(startVert + 1);
+            indices.push_back(startVert + TileSquares + 1);
+            indices.push_back(startVert + TileSquares + 2);
+        }
+
+        return indices;
     }
 
 private:

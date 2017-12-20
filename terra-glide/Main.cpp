@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include <glm\vec3.hpp>
 #include <iostream>
+#include <vector>
 
 int main()
 {
@@ -16,6 +17,14 @@ int main()
     t.prepare(glm::vec3(20.0f, 0.0f, 20.0f));
     t.prepare(glm::vec3(20.0f, 0.0f, 19.0f));
     t.prepare(glm::vec3(20.0f, 0.0f, 18.0f));
+
+    auto indices(Tile::mkIndices());
+
+    std::cout << indices.size() << std::endl;
+    for (auto index : indices)
+    {
+        std::cout << index << std::endl;
+    }
 
     return 0;
 }
