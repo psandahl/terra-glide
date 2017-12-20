@@ -132,6 +132,7 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="TerraGlide.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>

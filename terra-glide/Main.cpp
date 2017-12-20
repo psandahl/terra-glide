@@ -20,11 +20,11 @@ int main()
 
     auto indices(Tile::mkIndices());
 
-    std::cout << indices.size() << std::endl;
-    for (auto index : indices)
+    std::cout << indices->size() << std::endl;
+    /*for (auto index : indices)
     {
         std::cout << index << std::endl;
-    }
+    }*/
 
     return 0;
 }

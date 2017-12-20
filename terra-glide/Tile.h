@@ -1,18 +1,25 @@
 #pragma once
 
+#include "Program.h"
 #include <glad\glad.h>
 #include <glm\common.hpp>
+#include <memory>
 #include <tuple>
 #include <vector>
 
 using TileAddress = std::tuple<int, int>;
+
+class Tile;
+
+std::shared_ptr<Tile> makeTile(const TileAddress& address, 
+    std::shared_ptr<Program> program, 
+    std::shared_ptr<std::vector<GLuint>> indices);
 
 class Tile
 {
 public:
     static constexpr int TileSquares = 3;
     static constexpr int MaxTiles = 100;
-    //static const int TileVertices = TileSquares;
 
     Tile(const TileAddress& address) :
         m_address(address)
@@ -28,7 +35,7 @@ public:
         return m_address;
     }
 
-    // For a given coordinate x, z give its start tile adress.
+    // For a given coordinate x, z give its start tile address.
     // The coordinate will be clamped within [0, MaxTiles * TileSquares].
     static TileAddress mkTileAddress(float xpos, float zpos) noexcept
     {
@@ -39,19 +46,19 @@ public:
     }
 
     // Make indices for the tiles.
-    static std::vector<GLuint> mkIndices()
+    static std::shared_ptr<std::vector<GLuint>> mkIndices()
     {
-        std::vector<GLuint> indices(TileSquares * TileSquares * 6);
-        indices.clear();
+        auto indices = std::make_shared<std::vector<GLuint>>(TileSquares * TileSquares * 6);
+        indices->clear();
         for (auto square = 0; square < TileSquares * TileSquares; ++square)
         {
             auto startVert = (square / TileSquares) * (TileSquares + 1) + (square % TileSquares);
-            indices.push_back(startVert + 1);
-            indices.push_back(startVert);
-            indices.push_back(startVert + TileSquares + 1);
-            indices.push_back(startVert + 1);
-            indices.push_back(startVert + TileSquares + 1);
-            indices.push_back(startVert + TileSquares + 2);
+            indices->push_back(startVert + 1);
+            indices->push_back(startVert);
+            indices->push_back(startVert + TileSquares + 1);
+            indices->push_back(startVert + 1);
+            indices->push_back(startVert + TileSquares + 1);
+            indices->push_back(startVert + TileSquares + 2);
         }
 
         return indices;
