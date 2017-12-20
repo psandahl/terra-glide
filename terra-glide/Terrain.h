@@ -26,9 +26,17 @@ private:
         const std::vector<TileAddress>& currentSet, 
         std::vector<TileAddress>& purgeSet) const;
 
+    void calcAddSet(const std::vector<TileAddress>& wantedSet,
+        const std::vector<TileAddress>& currentSet,
+        std::vector<TileAddress>& purgeSet) const;
+
+    void purgeStuff(const std::vector<TileAddress>& purgeSet);
+
+    void addStuff(const std::vector<TileAddress>& addSet);
+
     // How far - N, W, S, E - can the camera see from its
     // current position.
-    static constexpr float TileVista = 10.f;
+    static constexpr float TileVista = 5.0f;
 
     //std::vector<std::shared_ptr<Tile>> m_tiles;
     std::vector<TileAddress> m_currentTileAddresses;
