@@ -68,12 +68,19 @@ void Terrain::prepare(const glm::vec3& position)
 
 void Terrain::render(const glm::mat4& vp) noexcept
 {
+    GLint polygonMode[2];
+    glGetIntegerv(GL_POLYGON_MODE, polygonMode);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     m_program->enable();
     for (auto tile : m_tiles)
     {
         tile->render(vp);
     }
     m_program->disable();
+
+    glPolygonMode(polygonMode[0], polygonMode[1]);
 }
 
 void Terrain::calcWantedSet(const glm::vec3& position,
