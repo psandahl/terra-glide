@@ -5,6 +5,7 @@
 #include "Environment.h"
 #include "Mesh.h"
 #include "Program.h"
+#include "Terrain.h"
 #include "Viewport.h"
 #include "Vertex.h"
 #include <glm\vec2.hpp>
@@ -26,6 +27,7 @@ public:
         m_camera(initialCamera()),
         m_cameraNavigation(),
         m_environment(),
+        m_terrain(),
         m_dummyProgram(),
         m_dummyMesh()
     {}
@@ -64,6 +66,7 @@ private:
     Camera m_camera;
     CameraNavigation m_cameraNavigation;
     Environment m_environment;
+    std::shared_ptr<Terrain> m_terrain;
     std::shared_ptr<Program> m_dummyProgram;
     std::shared_ptr<Mesh> m_dummyMesh;
 };

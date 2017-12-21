@@ -21,7 +21,7 @@ class Tile
 {
 public:
     static constexpr int TileSquares = 3;
-    static constexpr int MaxTiles = 100;
+    static constexpr int MaxTiles = 1000000;
 
     Tile(const TileAddress& address,
         std::shared_ptr<Program> program,

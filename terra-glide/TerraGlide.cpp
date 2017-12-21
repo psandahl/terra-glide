@@ -1,5 +1,6 @@
 #include "Program.h"
 #include "TerraGlide.h"
+#include "Terrain.h"
 #include "Vertex.h"
 #include "Viewport.h"
 #include <glad\glad.h>
@@ -16,6 +17,15 @@ std::shared_ptr<Mesh> makeDummyMesh();
 
 TerraGlideStatus TerraGlide::setup() noexcept
 {
+    auto terrain = makeTerrain();
+    if (std::holds_alternative<std::string>(terrain))
+    {
+        std::cerr << "Error: " << std::get<0>(terrain) << std::endl;
+        return TerraGlideStatus::Stop;
+    }
+
+    m_terrain = std::get<1>(terrain);
+
     auto dummyProgram = makeProgram({ {ShaderType::Vertex, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\dummy.vert"},
                                       { ShaderType::Fragment, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\dummy.frag" }
                                     });
