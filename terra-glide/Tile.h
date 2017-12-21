@@ -5,6 +5,7 @@
 #include "Vertex.h"
 #include <glad\glad.h>
 #include <glm\common.hpp>
+#include <glm\mat4x4.hpp>
 #include <memory>
 #include <tuple>
 #include <vector>
@@ -68,6 +69,16 @@ public:
         }
 
         return indices;
+    }
+
+    void render(const glm::mat4& vp) noexcept
+    {
+        // Program is already activated. Mesh is already
+        // in world space.
+        m_program->setUniform("mvp", vp);
+        m_mesh->enable();
+        m_mesh->render();
+        m_mesh->disable();
     }
 
 private:

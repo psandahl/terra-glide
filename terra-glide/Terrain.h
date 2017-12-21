@@ -2,6 +2,8 @@
 
 #include "Program.h"
 #include "Tile.h"
+#include <glad\glad.h>
+#include <glm\mat4x4.hpp>
 #include <glm\vec3.hpp>
 #include <memory>
 #include <string>
@@ -17,7 +19,8 @@ class Terrain
 public:
     Terrain() = delete;
     Terrain(std::shared_ptr<Program> program):
-        m_program(program)
+        m_program(program),
+        m_indices(Tile::mkIndices())
     {}
     Terrain(const Terrain&) = delete;
     ~Terrain() = default;
@@ -26,6 +29,9 @@ public:
 
     // Prepare the terrain (i.e. manage tiles) for this position.
     void prepare(const glm::vec3& position);
+
+    // Render the terrain.
+    void render(const glm::mat4& vp) noexcept;
 
 private:
 
@@ -50,6 +56,7 @@ private:
     static constexpr float TileVista = 5.0f;
 
     std::shared_ptr<Program> m_program;
+    std::shared_ptr<std::vector<GLuint>> m_indices;
     std::vector<std::shared_ptr<Tile>> m_tiles;
     std::vector<TileAddress> m_currentTileAddresses;
 };

@@ -131,7 +131,6 @@ GLFWwindow* createGLContext(const Viewport& initialViewport)
 
 void windowSizeCallback(GLFWwindow* window, int width, int height)
 {
-    std::cout << "Callback. New size: " << width << ", " << height << std::endl;
     g_kernel->setViewport(width, height);
 }
 

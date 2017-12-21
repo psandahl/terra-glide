@@ -26,7 +26,7 @@ TerraGlideStatus TerraGlide::setup() noexcept
 
     m_terrain = std::get<1>(terrain);
 
-    auto dummyProgram = makeProgram({ {ShaderType::Vertex, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\dummy.vert"},
+    /*auto dummyProgram = makeProgram({ {ShaderType::Vertex, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\dummy.vert"},
                                       { ShaderType::Fragment, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\dummy.frag" }
                                     });
     if (std::holds_alternative<std::string>(dummyProgram))
@@ -36,7 +36,7 @@ TerraGlideStatus TerraGlide::setup() noexcept
     }
     m_dummyProgram = std::get<1>(dummyProgram);
     
-    m_dummyMesh = makeDummyMesh();
+    m_dummyMesh = makeDummyMesh();*/
 
     initialSettings();
 
@@ -46,21 +46,25 @@ TerraGlideStatus TerraGlide::setup() noexcept
 TerraGlideStatus TerraGlide::frame(const Viewport& viewport, float duration) noexcept
 {
     m_camera.animate(m_environment, m_cameraNavigation, duration);
+    
+    m_terrain->prepare(m_camera.position());
 
     setViewport(viewport);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     auto persp = perspectiveViewport(viewport);
     auto view = m_camera.matrix();
-    auto mvp = persp * view;
+    auto vp = persp * view;
 
-    m_dummyProgram->enable();
+    m_terrain->render(vp);
+
+    /*m_dummyProgram->enable();
     m_dummyProgram->setUniform("mvp", mvp);
     m_dummyProgram->setUniform("fragColor", glm::vec3(0, 0, 1));
     m_dummyMesh->enable();
     m_dummyMesh->render();
     m_dummyMesh->disable();
-    m_dummyProgram->disable();
+    m_dummyProgram->disable();*/
 
     return TerraGlideStatus::Continue;
 }

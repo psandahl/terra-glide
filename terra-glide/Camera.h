@@ -40,6 +40,12 @@ public:
 
     Camera& operator=(const Camera&) = default;
 
+    // Get the camera position.
+    const glm::vec3& position() const noexcept
+    {
+        return m_position;
+    }
+
     // From the Camera, produce a view matrix.
     glm::mat4 matrix() const noexcept
     {

@@ -4,7 +4,6 @@
 #include <glm\vec3.hpp>
 #include <memory>
 #include <vector>
-#include <iostream>
 
 std::vector<VertexWithPosition> vertices(const TileAddress& address);
 
@@ -37,7 +36,6 @@ std::vector<VertexWithPosition> vertices(const TileAddress& address)
             auto x = static_cast<float>(startx + col);
             auto z = static_cast<float>(startz + row);
 
-            std::cout << "x: " << x << ", z: " << z << std::endl;
             vertices.push_back({ glm::vec3(x, 0, z) });
         }
     }
