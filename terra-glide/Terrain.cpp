@@ -146,12 +146,18 @@ void Terrain::purgeStuff(const std::vector<TileAddress>& purgeSet)
         }
     }
 
-    // Update the address set.
-    std::remove_if(m_currentTileAddresses.begin(), m_currentTileAddresses.end(),
-        [&](const TileAddress& address) 
-            { return std::any_of(purgeSet.begin(), purgeSet.end(), 
-                [&](const TileAddress& toPurge) { return toPurge == address; });  
-            });
+    for (auto it = m_currentTileAddresses.begin(); it != m_currentTileAddresses.end();)
+    {
+        if (std::find(purgeSet.begin(), purgeSet.end(), *it) != purgeSet.end())
+        {
+            it = m_currentTileAddresses.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
     std::sort(m_currentTileAddresses.begin(), m_currentTileAddresses.end());
 }
 
