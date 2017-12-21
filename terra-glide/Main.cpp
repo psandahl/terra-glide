@@ -26,5 +26,8 @@ int main()
         std::cout << index << std::endl;
     }*/
 
+    //auto verts = vertices({10, 10});
+    //std::cout << verts.size() << std::endl;
+
     return 0;
 }

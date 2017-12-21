@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Mesh.h"
 #include "Program.h"
+#include "Vertex.h"
 #include <glad\glad.h>
 #include <glm\common.hpp>
 #include <memory>
@@ -21,8 +23,12 @@ public:
     static constexpr int TileSquares = 3;
     static constexpr int MaxTiles = 100;
 
-    Tile(const TileAddress& address) :
-        m_address(address)
+    Tile(const TileAddress& address,
+        std::shared_ptr<Program> program,
+        std::shared_ptr<Mesh> mesh) :
+        m_address(address),
+        m_program(program),
+        m_mesh(mesh)
     {}
     Tile() = delete;
     Tile(const Tile&) = delete;
@@ -66,4 +72,6 @@ public:
 
 private:
     TileAddress m_address;
+    std::shared_ptr<Program> m_program;
+    std::shared_ptr<Mesh> m_mesh;
 };
