@@ -1,10 +1,29 @@
+#include "Program.h"
 #include "Terrain.h"
 #include "Tile.h"
 #include <algorithm>
 #include <glm\vec3.hpp>
 #include <iostream>
 #include <iterator>
+#include <variant>
 #include <vector>
+
+std::variant<std::string, std::shared_ptr<Terrain>> makeTerrain()
+{
+    auto program = 
+        makeProgram(
+        { 
+            { ShaderType::Vertex, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\terrain-tile.vert" },
+            { ShaderType::Fragment, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\terrain-tile.frag" }
+        });
+
+    if (std::holds_alternative<std::string>(program))
+    {
+        return { std::get<0>(program) };
+    }
+ 
+    return { std::make_shared<Terrain>(std::get<1>(program)) };
+}
 
 void printSet(const std::vector<TileAddress>& addresses)
 {

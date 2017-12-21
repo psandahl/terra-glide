@@ -1,14 +1,24 @@
 #pragma once
 
+#include "Program.h"
 #include "Tile.h"
 #include <glm\vec3.hpp>
 #include <memory>
+#include <string>
+#include <variant>
 #include <vector>
+
+class Terrain;
+
+std::variant<std::string, std::shared_ptr<Terrain>> makeTerrain();
 
 class Terrain
 {
 public:
-    Terrain() = default;
+    Terrain() = delete;
+    Terrain(std::shared_ptr<Program> program):
+        m_program(program)
+    {}
     Terrain(const Terrain&) = delete;
     ~Terrain() = default;
 
@@ -35,9 +45,11 @@ private:
     void addStuff(const std::vector<TileAddress>& addSet);
 
     // How far - N, W, S, E - can the camera see from its
-    // current position.
+    // current position with regards to how many tiles must
+    // be loaded. Not same as far plane.
     static constexpr float TileVista = 5.0f;
 
-    //std::vector<std::shared_ptr<Tile>> m_tiles;
+    std::shared_ptr<Program> m_program;
+    std::vector<std::shared_ptr<Tile>> m_tiles;
     std::vector<TileAddress> m_currentTileAddresses;
 };
