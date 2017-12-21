@@ -81,6 +81,12 @@ public:
         m_mesh->disable();
     }
 
+    void release()
+    {
+        m_mesh->release();
+        m_mesh = nullptr;
+    }
+
 private:
     TileAddress m_address;
     std::shared_ptr<Program> m_program;

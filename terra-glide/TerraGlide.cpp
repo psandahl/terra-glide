@@ -133,6 +133,7 @@ void TerraGlide::cursorPos(const glm::vec2& pos) noexcept
 
 void TerraGlide::teardown() noexcept
 {
+    m_terrain->release();
 }
 
 void TerraGlide::initialSettings() noexcept

@@ -33,6 +33,9 @@ public:
     // Render the terrain.
     void render(const glm::mat4& vp) noexcept;
 
+    // Release the terrain.
+    void release() noexcept;
+
 private:
 
     void calcWantedSet(const glm::vec3& position, 

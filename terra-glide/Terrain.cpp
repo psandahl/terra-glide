@@ -83,6 +83,15 @@ void Terrain::render(const glm::mat4& vp) noexcept
     glPolygonMode(polygonMode[0], polygonMode[1]);
 }
 
+void Terrain::release() noexcept
+{
+    for (auto tile : m_tiles)
+    {
+        tile->release();
+    }
+    m_program->release();
+}
+
 void Terrain::calcWantedSet(const glm::vec3& position,
     std::vector<TileAddress>& wantedSet) const
 {
