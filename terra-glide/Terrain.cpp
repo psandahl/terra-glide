@@ -133,6 +133,20 @@ void Terrain::calcAddSet(const std::vector<TileAddress>& wantedSet,
 
 void Terrain::purgeStuff(const std::vector<TileAddress>& purgeSet)
 {
+    for (auto it = m_tiles.begin(); it != m_tiles.end();)
+    {
+        if (std::find(purgeSet.begin(), purgeSet.end(), (*it)->tileAddress()) != purgeSet.end())
+        {
+            (*it)->release();
+            it = m_tiles.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
+    // Update the address set.
     std::remove_if(m_currentTileAddresses.begin(), m_currentTileAddresses.end(),
         [&](const TileAddress& address) 
             { return std::any_of(purgeSet.begin(), purgeSet.end(), 
