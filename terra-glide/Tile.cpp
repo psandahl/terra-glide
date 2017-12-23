@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-std::vector<VertexWithPosition> vertices(const TileAddress& address);
+std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address);
 
 std::shared_ptr<Tile> makeTile(const TileAddress& address,
     std::shared_ptr<Program> program,
@@ -13,7 +13,7 @@ std::shared_ptr<Tile> makeTile(const TileAddress& address,
 {
     MeshRequest request
         { Primitive::Triangles, 
-          std::make_shared<VerticesWithPosition>(vertices(address)), 
+          std::make_shared<VerticesWithPositionAndNormal>(vertices(address)), 
           indices 
         };
 
@@ -22,11 +22,11 @@ std::shared_ptr<Tile> makeTile(const TileAddress& address,
     return std::make_shared<Tile>(address, program, mesh);
 }
 
-std::vector<VertexWithPosition> vertices(const TileAddress& address)
+std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address)
 {
     auto[startx, startz] = address;
     auto numVertices = (Tile::TileSquares + 1) * (Tile::TileSquares + 1);
-    std::vector<VertexWithPosition> vertices(numVertices);
+    std::vector<VertexWithPositionAndNormal> vertices(numVertices);
     vertices.clear();
 
     for (auto row = 0; row < Tile::TileSquares + 1; ++row)
@@ -36,7 +36,7 @@ std::vector<VertexWithPosition> vertices(const TileAddress& address)
             auto x = static_cast<float>(startx + col);
             auto z = static_cast<float>(startz + row);
 
-            vertices.push_back({ glm::vec3(x, 0, z) });
+            vertices.push_back({ glm::vec3(x, 0, z), glm::vec3(1) });
         }
     }
 
