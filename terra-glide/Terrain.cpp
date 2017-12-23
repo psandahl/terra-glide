@@ -71,10 +71,9 @@ void Terrain::render(const glm::mat4& perspective,
     const glm::mat4& view,
     const Environment& environment) noexcept
 {
-    GLint polygonMode[2];
-    glGetIntegerv(GL_POLYGON_MODE, polygonMode);
-
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //GLint polygonMode[2];
+    //glGetIntegerv(GL_POLYGON_MODE, polygonMode);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     auto vp = perspective * view;
 
@@ -85,7 +84,7 @@ void Terrain::render(const glm::mat4& perspective,
     }
     m_program->disable();
 
-    glPolygonMode(polygonMode[0], polygonMode[1]);
+    //glPolygonMode(polygonMode[0], polygonMode[1]);
 }
 
 void Terrain::release() noexcept
