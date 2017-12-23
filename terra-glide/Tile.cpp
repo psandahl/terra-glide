@@ -2,12 +2,14 @@
 #include "Tile.h"
 #include "Vertex.h"
 #include <glm\vec3.hpp>
+#include <glm\gtc\noise.hpp>
 #include <memory>
 #include <vector>
 
 std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address, std::shared_ptr<std::vector<GLuint>> indices);
 void genSmoothNormals(std::vector<VertexWithPositionAndNormal>& vertices, std::shared_ptr<std::vector<GLuint>> indices);
 glm::vec3 surfaceNormal(const glm::vec3& v1, const glm::vec3& v2, const glm::vec3& v3);
+float terrainHeight(float x, float z);
 
 std::shared_ptr<Tile> makeTile(const TileAddress& address,
     std::shared_ptr<Program> program,
@@ -38,7 +40,7 @@ std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address, st
             auto x = static_cast<float>(startx + col);
             auto z = static_cast<float>(startz + row);
 
-            vertices.push_back({ glm::vec3(x, 0, z), glm::vec3(0) });
+            vertices.push_back({ glm::vec3(x, terrainHeight(x, z), z), glm::vec3(0) });
         }
     }
 
@@ -80,4 +82,10 @@ glm::vec3 surfaceNormal(const glm::vec3& v1, const glm::vec3& v2, const glm::vec
     auto vec2 = v3 - v1;
 
     return glm::normalize(glm::cross(vec1, vec2));
+}
+
+float terrainHeight(float x, float z)
+{
+    glm::vec3 v(x, 0, z);
+    return glm::simplex(v);
 }
