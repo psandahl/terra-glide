@@ -1,3 +1,4 @@
+#include "Math.h"
 #include "Program.h"
 #include "TerraGlide.h"
 #include "Terrain.h"
@@ -137,7 +138,7 @@ void TerraGlide::teardown() noexcept
 
 void TerraGlide::initialSettings() noexcept
 {
-    glClearColor(114.0f / 255.0f, 171.0f / 255.0f, 245.0f / 255.0f, 0);
+    glClearColor(Math::color(114), Math::color(171), Math::color(245), 0);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);

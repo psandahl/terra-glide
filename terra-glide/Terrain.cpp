@@ -81,6 +81,9 @@ void Terrain::render(const glm::mat4& perspective,
 
     m_program->enable();
     m_program->setUniform("mvp", vp);
+    m_program->setUniform("ambientColor", environment.ambientColor());
+    m_program->setUniform("ambientStrength", environment.ambientStrength());
+
     for (auto tile : m_tiles)
     {
         tile->render();
