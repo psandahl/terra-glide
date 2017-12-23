@@ -2,6 +2,7 @@
 
 #include <glad\glad.h>
 #include <glm\vec3.hpp>
+#include <glm\mat3x3.hpp>
 #include <glm\mat4x4.hpp>
 #include <glm\gtc\type_ptr.hpp>
 #include <memory>
@@ -58,10 +59,22 @@ public:
         }
     }
 
+    void setUniform(const std::string& name, const GLfloat val) const noexcept
+    {
+        auto loc = glGetUniformLocation(m_program, name.c_str());
+        glUniform1f(loc, val);
+    }
+
     void setUniform(const std::string& name, const glm::vec3& vec) const noexcept
     {
         auto loc = glGetUniformLocation(m_program, name.c_str());
         glUniform3fv(loc, 1, glm::value_ptr(vec));
+    }
+
+    void setUniform(const std::string& name, const glm::mat3& mat) const noexcept
+    {
+        auto loc = glGetUniformLocation(m_program, name.c_str());
+        glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(mat));
     }
 
     void setUniform(const std::string& name, const glm::mat4& mat) const noexcept
