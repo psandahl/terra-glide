@@ -6,6 +6,7 @@
 #include <glad\glad.h>
 #include <glm\mat4x4.hpp>
 #include <glm\vec3.hpp>
+#include <glm\vec4.hpp>
 #include <memory>
 #include <string>
 #include <variant>
@@ -48,6 +49,15 @@ private:
         {
             m_tileVista += 0.25f;
         }
+    }
+
+    glm::vec3 transformSunDirection(const glm::mat4& view, 
+        const glm::vec3& direction) const noexcept
+    {
+        auto asMat4 = glm::vec4(direction, 0);
+        auto transformed = view * asMat4;
+
+        return glm::normalize(glm::vec3(asMat4));
     }
 
     void calcWantedSet(const glm::vec3& position, 

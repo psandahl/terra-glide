@@ -77,12 +77,17 @@ void Terrain::render(const glm::mat4& perspective,
     //glGetIntegerv(GL_POLYGON_MODE, polygonMode);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    auto vp = perspective * view;
+    // Tiles are already in world space.
+    auto vpMatrix = perspective * view;
 
     m_program->enable();
-    m_program->setUniform("mvp", vp);
+    m_program->setUniform("mvpMatrix", vpMatrix);
+    m_program->setUniform("normalMatrix", Math::normalMatrix(view));
     m_program->setUniform("ambientColor", environment.ambientColor());
     m_program->setUniform("ambientStrength", environment.ambientStrength());
+    m_program->setUniform("sunDirection", 
+        transformSunDirection(view, environment.sunDirection()));
+    m_program->setUniform("sunColor", environment.sunColor());
 
     for (auto tile : m_tiles)
     {
