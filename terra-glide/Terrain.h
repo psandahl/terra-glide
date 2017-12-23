@@ -56,7 +56,7 @@ private:
     // How far - N, W, S, E - can the camera see from its
     // current position with regards to how many tiles must
     // be loaded. Not same as far plane.
-    static constexpr float TileVista = 5.0f;
+    static constexpr float TileVista = 600.0f;
 
     std::shared_ptr<Program> m_program;
     std::shared_ptr<std::vector<GLuint>> m_indices;

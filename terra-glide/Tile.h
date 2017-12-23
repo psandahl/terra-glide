@@ -21,7 +21,7 @@ std::shared_ptr<Tile> makeTile(const TileAddress& address,
 class Tile
 {
 public:
-    static constexpr int TileSquares = 3;
+    static constexpr int TileSquares = 255;
     static constexpr int MaxTiles = 1000000;
 
     Tile(const TileAddress& address,
