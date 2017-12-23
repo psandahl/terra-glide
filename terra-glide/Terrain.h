@@ -32,7 +32,9 @@ public:
     void prepare(const glm::vec3& position);
 
     // Render the terrain.
-    void render(const glm::mat4& vp) noexcept;
+    void render(const glm::mat4& perspective, 
+        const glm::mat4& view, 
+        const Environment& environment) noexcept;
 
     // Release the terrain.
     void release() noexcept;

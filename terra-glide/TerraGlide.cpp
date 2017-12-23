@@ -38,11 +38,10 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, float duration) noe
     setViewport(viewport);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    auto persp = perspectiveViewport(viewport);
+    auto perspective = perspectiveViewport(viewport);
     auto view = m_camera.matrix();
-    auto vp = persp * view;
 
-    m_terrain->render(vp);
+    m_terrain->render(perspective, view, m_environment);
 
     return TerraGlideStatus::Continue;
 }

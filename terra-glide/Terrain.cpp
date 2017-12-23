@@ -66,12 +66,16 @@ void Terrain::prepare(const glm::vec3& position)
     //printSet(m_currentTileAddresses);
 }
 
-void Terrain::render(const glm::mat4& vp) noexcept
+void Terrain::render(const glm::mat4& perspective,
+    const glm::mat4& view,
+    const Environment& environment) noexcept
 {
     GLint polygonMode[2];
     glGetIntegerv(GL_POLYGON_MODE, polygonMode);
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    auto vp = perspective * view;
 
     m_program->enable();
     for (auto tile : m_tiles)
