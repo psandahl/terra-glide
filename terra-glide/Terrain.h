@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Environment.h"
 #include "Program.h"
 #include "Tile.h"
 #include <glad\glad.h>
@@ -55,8 +56,10 @@ private:
 
     // How far - N, W, S, E - can the camera see from its
     // current position with regards to how many tiles must
-    // be loaded. Not same as far plane.
-    static constexpr float TileVista = 600.0f;
+    // be loaded. Not same as far plane, but always greater
+    // than far plane.
+    static constexpr float TileVista = 
+        Environment::FarPlane + (0.2 * Environment::FarPlane);
 
     std::shared_ptr<Program> m_program;
     std::shared_ptr<std::vector<GLuint>> m_indices;

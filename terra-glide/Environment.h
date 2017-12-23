@@ -5,6 +5,8 @@
 class Environment
 {
 public:
+    static constexpr float FarPlane = 500.0f;
+
     Environment():
         m_horizontalSpeed(2),
         m_verticalSpeed(2),

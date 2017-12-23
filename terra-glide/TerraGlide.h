@@ -51,7 +51,7 @@ private:
         return glm::perspectiveFov(glm::radians(45.0f), 
             static_cast<float>(std::get<0>(viewport)), 
             static_cast<float>(std::get<1>(viewport)), 
-            0.1f, 500.0f);
+            0.1f, Environment::FarPlane);
     }
     static void setViewport(const Viewport& viewport) noexcept
     {
