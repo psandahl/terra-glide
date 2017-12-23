@@ -5,7 +5,10 @@ layout (location = 1) in vec3 normal;
 
 uniform mat4 mvp;
 
+out vec3 vColor;
+
 void main()
 {
+	vColor = normal;
 	gl_Position = mvp * vec4(position, 1);
 }
