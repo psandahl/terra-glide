@@ -20,6 +20,7 @@ class Terrain
 public:
     Terrain() = delete;
     Terrain(std::shared_ptr<Program> program):
+        m_tileVista(1),
         m_program(program),
         m_indices(Tile::mkIndices())
     {}
@@ -41,6 +42,14 @@ public:
 
 private:
 
+    void updateTileVista() noexcept
+    {
+        if (m_tileVista < Environment::FarPlane + (0.2 * Environment::FarPlane))
+        {
+            m_tileVista += 0.25f;
+        }
+    }
+
     void calcWantedSet(const glm::vec3& position, 
         std::vector<TileAddress>& wantedSet) const;
 
@@ -60,9 +69,7 @@ private:
     // current position with regards to how many tiles must
     // be loaded. Not same as far plane, but always greater
     // than far plane.
-    static constexpr float TileVista = 
-        Environment::FarPlane + (0.2 * Environment::FarPlane);
-
+    float m_tileVista;
     std::shared_ptr<Program> m_program;
     std::shared_ptr<std::vector<GLuint>> m_indices;
     std::vector<std::shared_ptr<Tile>> m_tiles;

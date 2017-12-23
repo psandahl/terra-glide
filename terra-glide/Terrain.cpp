@@ -36,6 +36,8 @@ std::variant<std::string, std::shared_ptr<Terrain>> makeTerrain()
 
 void Terrain::prepare(const glm::vec3& position)
 {
+    updateTileVista();
+
     //std::cout << "-----------\n";
     //std::cout << "Prepare for position x=" << position.x << ", z=" << position.z << std::endl;
 
@@ -102,12 +104,12 @@ void Terrain::calcWantedSet(const glm::vec3& position,
 {
     auto xpos = position.x;
     auto zpos = position.z;
-    auto tiles = (TileVista * 2.0f) / static_cast<float>(Tile::TileSquares);
-    auto stride = (TileVista * 2.0f) / tiles;
-    auto startx = xpos - TileVista;
-    auto endx = xpos + TileVista;
-    auto startz = zpos - TileVista;
-    auto endz = zpos + TileVista;
+    auto tiles = (m_tileVista * 2.0f) / static_cast<float>(Tile::TileSquares);
+    auto stride = (m_tileVista * 2.0f) / tiles;
+    auto startx = xpos - m_tileVista;
+    auto endx = xpos + m_tileVista;
+    auto startz = zpos - m_tileVista;
+    auto endz = zpos + m_tileVista;
 
     for (auto z = startz; z < endz; z += stride)
     {
