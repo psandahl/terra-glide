@@ -78,9 +78,10 @@ void Terrain::render(const glm::mat4& perspective,
     auto vp = perspective * view;
 
     m_program->enable();
+    m_program->setUniform("mvp", vp);
     for (auto tile : m_tiles)
     {
-        tile->render(vp);
+        tile->render();
     }
     m_program->disable();
 
