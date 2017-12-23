@@ -4,12 +4,15 @@
 #include <glm\vec3.hpp>
 #include <glm\gtc\noise.hpp>
 #include <memory>
+#include <tuple>
 #include <vector>
 
 std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address, std::shared_ptr<std::vector<GLuint>> indices);
 void genSmoothNormals(std::vector<VertexWithPositionAndNormal>& vertices, std::shared_ptr<std::vector<GLuint>> indices);
 glm::vec3 surfaceNormal(const glm::vec3& v1, const glm::vec3& v2, const glm::vec3& v3);
 float terrainHeight(float x, float z);
+float terrainHeight(float x, float z, float altitude, float freq);
+float normalizeHeight(float value);
 
 std::shared_ptr<Tile> makeTile(const TileAddress& address,
     std::shared_ptr<Program> program,
@@ -40,7 +43,7 @@ std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address, st
             auto x = static_cast<float>(startx + col);
             auto z = static_cast<float>(startz + row);
 
-            vertices.push_back({ glm::vec3(x, terrainHeight(x, z), z), glm::vec3(0) });
+            vertices.push_back({ glm::vec3(x, 100.0f * terrainHeight(x, z), z), glm::vec3(0) });
         }
     }
 
@@ -86,6 +89,37 @@ glm::vec3 surfaceNormal(const glm::vec3& v1, const glm::vec3& v2, const glm::vec
 
 float terrainHeight(float x, float z)
 {
-    glm::vec3 v(x, 0, z);
-    return glm::simplex(v);
+    //return normalizeHeight(terrainHeight(x / 1024.0f, z / 1024.0f, 1.0f, 1024.0f));
+    auto xx = x / 1024.0f;
+    auto zz = z / 1024.0f;
+    std::vector<std::tuple<float, float>> weights = 
+    { 
+        {0.4f, 4.0f}, 
+        {0.2f, 8.0f}, 
+        {0.1f, 16.0f}, 
+        {0.05f, 32.0f}, 
+        {0.025f, 64.0f}, 
+        {0.0125f, 128.0f}, 
+        {0.006f, 256.0f }, 
+        {0.003f, 512.0f} 
+    };
+
+    float height = 0.0f;
+    for (auto[altitude, freq] : weights)
+    {
+        height += terrainHeight(xx, zz, altitude, freq);
+    }
+
+    return normalizeHeight(height);
+}
+
+float terrainHeight(float x, float z, float altitude, float freq)
+{
+    glm::vec3 v(x * freq, 0, z * freq);
+    return altitude * glm::simplex(v);
+}
+
+float normalizeHeight(float value)
+{
+    return (value + 1.0f) * 0.5f;
 }

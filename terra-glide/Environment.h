@@ -10,7 +10,7 @@ public:
     static constexpr float FarPlane = 500.0f;
 
     Environment() :
-        m_horizontalSpeed(2),
+        m_horizontalSpeed(20),
         m_verticalSpeed(2),
         m_rotationSpeed(glm::radians(360.0f)),
         m_ambientStrength(0.2f),
