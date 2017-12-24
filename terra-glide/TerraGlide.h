@@ -44,7 +44,7 @@ private:
     static void initialSettings() noexcept;
     static Camera initialCamera() noexcept
     {
-        return { glm::vec3(100000, 125, 100000), {glm::radians(0.0f), 0.0f}, { glm::radians(0.0f), 0.0f } };
+        return { glm::vec3(100000, 225, 100000), {glm::radians(0.0f), 0.0f}, { glm::radians(0.0f), 0.0f } };
     }
     static glm::mat4 perspectiveViewport(const Viewport& viewport) noexcept
     {

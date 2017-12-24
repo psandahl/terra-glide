@@ -83,6 +83,11 @@ void Terrain::render(const glm::mat4& perspective,
     m_program->enable();
     m_program->setUniform("mvpMatrix", vpMatrix);
     m_program->setUniform("normalMatrix", Math::normalMatrix(view));
+    m_program->setUniform("terrainHeight", environment.terrainHeight());
+    m_program->setUniform("terrainColor0", environment.terrainColor0());
+    m_program->setUniform("terrainColor1", environment.terrainColor1());
+    m_program->setUniform("terrainColor2", environment.terrainColor2());
+    m_program->setUniform("terrainColor3", environment.terrainColor3());
     m_program->setUniform("ambientColor", environment.ambientColor());
     m_program->setUniform("ambientStrength", environment.ambientStrength());
     m_program->setUniform("sunDirection", 

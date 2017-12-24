@@ -58,7 +58,8 @@ std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address,
     return vertices;
 }
 
-void genSmoothNormals(std::vector<VertexWithPositionAndNormal>& vertices, std::shared_ptr<std::vector<GLuint>> indices)
+void genSmoothNormals(std::vector<VertexWithPositionAndNormal>& vertices, 
+    std::shared_ptr<std::vector<GLuint>> indices)
 {
     std::size_t index = 0;
     while ((index + 3) < indices->size())
@@ -100,9 +101,9 @@ float terrainHeight(float x, float z)
     auto zz = z / 1024.0f;
     std::vector<std::tuple<float, float>> weights = 
     { 
-        {0.4f, 4.0f}, 
-        {0.2f, 8.0f}, 
-        {0.1f, 16.0f}, 
+        {0.5f, 4.0f}, 
+        {0.25f, 8.0f}, 
+        {0.15f, 16.0f}, 
         {0.05f, 32.0f}, 
         {0.025f, 64.0f}, 
         {0.0125f, 128.0f}, 
