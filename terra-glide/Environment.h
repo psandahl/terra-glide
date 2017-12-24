@@ -7,7 +7,7 @@
 class Environment
 {
 public:
-    static constexpr float FarPlane = 500.0f;
+    static constexpr float FarPlane = 850.0f;
 
     Environment() :
         m_terrainHeight(200.0f),

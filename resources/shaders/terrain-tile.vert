@@ -47,9 +47,9 @@ vec3 terrainColor()
 {
 	float height = position.y / terrainHeight;
 
-	vec3 color = mix(terrainColor0, terrainColor1, smoothstep(0.0, 0.2, height));
-	color = mix(color, terrainColor2, smoothstep(0.2, 0.7, height));
-	return mix(color, terrainColor3, smoothstep(0.7, 1.0, height));
+	vec3 color = mix(terrainColor0, terrainColor1, smoothstep(0.0, 0.5, height));
+	color = mix(color, terrainColor2, smoothstep(0.5, 0.6, height));
+	return mix(color, terrainColor3, smoothstep(0.6, 1.0, height));
 }
 
 // Calculate the ambient light.
