@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Environment.h"
 #include "Mesh.h"
 #include "Program.h"
 #include "Vertex.h"
@@ -15,7 +16,8 @@ class Tile;
 
 std::shared_ptr<Tile> makeTile(const TileAddress& address, 
     std::shared_ptr<Program> program, 
-    std::shared_ptr<std::vector<GLuint>> indices);
+    std::shared_ptr<std::vector<GLuint>> indices,
+    const Environment& environment);
 
 class Tile
 {

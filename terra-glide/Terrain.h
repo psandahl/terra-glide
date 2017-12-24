@@ -21,7 +21,7 @@ class Terrain
 public:
     Terrain() = delete;
     Terrain(std::shared_ptr<Program> program):
-        m_tileVista(1),
+        m_tileVista(static_cast<float>(Tile::TileSquares + 1)),
         m_program(program),
         m_indices(Tile::mkIndices())
     {}
@@ -31,7 +31,7 @@ public:
     Terrain& operator=(const Terrain&) = delete;
 
     // Prepare the terrain (i.e. manage tiles) for this position.
-    void prepare(const glm::vec3& position);
+    void prepare(const glm::vec3& position, const Environment& environment);
 
     // Render the terrain.
     void render(const glm::mat4& perspective, 
@@ -73,7 +73,8 @@ private:
 
     void purgeStuff(const std::vector<TileAddress>& purgeSet);
 
-    void addStuff(const std::vector<TileAddress>& addSet);
+    void addStuff(const std::vector<TileAddress>& addSet, 
+        const Environment& environment);
 
     // How far - N, W, S, E - can the camera see from its
     // current position with regards to how many tiles must

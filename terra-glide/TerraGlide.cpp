@@ -34,7 +34,7 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, float duration) noe
 {
     m_camera.animate(m_environment, m_cameraNavigation, duration);
     
-    m_terrain->prepare(m_camera.position());
+    m_terrain->prepare(m_camera.position(), m_environment);
 
     setViewport(viewport);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

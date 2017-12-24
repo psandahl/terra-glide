@@ -10,6 +10,7 @@ public:
     static constexpr float FarPlane = 500.0f;
 
     Environment() :
+        m_terrainHeight(100.0f),
         m_horizontalSpeed(20),
         m_verticalSpeed(2),
         m_rotationSpeed(glm::radians(360.0f)),
@@ -23,6 +24,11 @@ public:
     ~Environment() = default;
 
     Environment& operator=(const Environment&) = default;
+
+    float terrainHeight() const noexcept
+    {
+        return m_terrainHeight;
+    }
 
     float horizontalSpeed() const noexcept
     {
@@ -60,6 +66,7 @@ public:
     }
 
 private:
+    float m_terrainHeight;
     float m_horizontalSpeed;
     float m_verticalSpeed;
     float m_rotationSpeed;

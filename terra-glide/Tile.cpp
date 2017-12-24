@@ -7,8 +7,11 @@
 #include <tuple>
 #include <vector>
 
-std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address, std::shared_ptr<std::vector<GLuint>> indices);
-void genSmoothNormals(std::vector<VertexWithPositionAndNormal>& vertices, std::shared_ptr<std::vector<GLuint>> indices);
+std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address,
+    std::shared_ptr<std::vector<GLuint>> indices,
+    const Environment& environment);
+void genSmoothNormals(std::vector<VertexWithPositionAndNormal>& vertices, 
+    std::shared_ptr<std::vector<GLuint>> indices);
 glm::vec3 surfaceNormal(const glm::vec3& v1, const glm::vec3& v2, const glm::vec3& v3);
 float terrainHeight(float x, float z);
 float terrainHeight(float x, float z, float altitude, float freq);
@@ -16,11 +19,12 @@ float normalizeHeight(float value);
 
 std::shared_ptr<Tile> makeTile(const TileAddress& address,
     std::shared_ptr<Program> program,
-    std::shared_ptr<std::vector<GLuint>> indices)
+    std::shared_ptr<std::vector<GLuint>> indices,
+    const Environment& environment)
 {
     MeshRequest request
         { Primitive::Triangles, 
-          std::make_shared<VerticesWithPositionAndNormal>(vertices(address, indices)), 
+          std::make_shared<VerticesWithPositionAndNormal>(vertices(address, indices, environment)), 
           indices 
         };
 
@@ -29,7 +33,9 @@ std::shared_ptr<Tile> makeTile(const TileAddress& address,
     return std::make_shared<Tile>(address, program, mesh);
 }
 
-std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address, std::shared_ptr<std::vector<GLuint>> indices)
+std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address, 
+    std::shared_ptr<std::vector<GLuint>> indices,
+    const Environment& environment)
 {
     auto[startx, startz] = address;
     auto numVertices = (Tile::TileSquares + 1) * (Tile::TileSquares + 1);
@@ -43,7 +49,7 @@ std::vector<VertexWithPositionAndNormal> vertices(const TileAddress& address, st
             auto x = static_cast<float>(startx + col);
             auto z = static_cast<float>(startz + row);
 
-            vertices.push_back({ glm::vec3(x, 100.0f * terrainHeight(x, z), z), glm::vec3(0) });
+            vertices.push_back({ glm::vec3(x, environment.terrainHeight() * terrainHeight(x, z), z), glm::vec3(0) });
         }
     }
 

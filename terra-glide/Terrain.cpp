@@ -34,7 +34,7 @@ std::variant<std::string, std::shared_ptr<Terrain>> makeTerrain()
     }
 }*/
 
-void Terrain::prepare(const glm::vec3& position)
+void Terrain::prepare(const glm::vec3& position, const Environment& environment)
 {
     updateTileVista();
 
@@ -64,7 +64,7 @@ void Terrain::prepare(const glm::vec3& position)
     //std::cout << "\nAdd set\n\n";
     //printSet(addSet);
 
-    addStuff(addSet);
+    addStuff(addSet, environment);
     //std::cout << "\nAdded current set\n\n";
     //printSet(m_currentTileAddresses);
 }
@@ -176,12 +176,13 @@ void Terrain::purgeStuff(const std::vector<TileAddress>& purgeSet)
     std::sort(m_currentTileAddresses.begin(), m_currentTileAddresses.end());
 }
 
-void Terrain::addStuff(const std::vector<TileAddress>& addSet)
+void Terrain::addStuff(const std::vector<TileAddress>& addSet, 
+    const Environment& environment)
 {
     // Make new Tiles.
     for (auto address : addSet)
     {
-        auto tile = makeTile(address, m_program, m_indices);
+        auto tile = makeTile(address, m_program, m_indices, environment);
         m_tiles.push_back(tile);
     }
 
