@@ -97,18 +97,20 @@ glm::vec3 surfaceNormal(const glm::vec3& v1, const glm::vec3& v2, const glm::vec
 float terrainHeight(float x, float z)
 {
     //return normalizeHeight(terrainHeight(x / 1024.0f, z / 1024.0f, 1.0f, 1024.0f));
-    auto xx = x / 1024.0f;
-    auto zz = z / 1024.0f;
+    auto xx = x / 1023.0f;
+    auto zz = z / 1023.0f;
     std::vector<std::tuple<float, float>> weights = 
     { 
-        {0.5f, 4.0f}, 
-        {0.25f, 8.0f}, 
-        {0.15f, 16.0f}, 
-        {0.05f, 32.0f}, 
-        {0.025f, 64.0f}, 
-        {0.0125f, 128.0f}, 
-        {0.006f, 256.0f }, 
-        {0.003f, 512.0f} 
+        {0.15f, 1.0f},
+        {0.45f, 2.0f},
+        {0.2f, 5.0f},
+        {0.1f, 9.0f},
+        {0.05f, 13.0f},
+        {0.025f, 19.0f},
+        {0.0125f, 37.0f},
+        {0.006f, 51.0f},
+        {0.0005f, 253.0f},
+        {0.00025f, 511.0f}
     };
 
     float height = 0.0f;
