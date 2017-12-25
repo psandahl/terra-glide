@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "CameraNavigation.h"
 #include "Environment.h"
+#include "SkyDome.h"
 #include "Terrain.h"
 #include "Viewport.h"
 #include "Vertex.h"
@@ -25,7 +26,8 @@ public:
         m_camera(initialCamera()),
         m_cameraNavigation(),
         m_environment(),
-        m_terrain()
+        m_terrain(),
+        m_skyDome()
     {}
     TerraGlide(const TerraGlide&) = default;
     ~TerraGlide() = default;
@@ -63,4 +65,5 @@ private:
     CameraNavigation m_cameraNavigation;
     Environment m_environment;
     std::shared_ptr<Terrain> m_terrain;
+    std::shared_ptr<SkyDome> m_skyDome;
 };

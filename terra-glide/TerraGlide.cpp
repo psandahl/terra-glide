@@ -2,6 +2,7 @@
 #include "Program.h"
 #include "TerraGlide.h"
 #include "Terrain.h"
+#include "SkyDome.h"
 #include "Vertex.h"
 #include "Viewport.h"
 #include <glad\glad.h>
@@ -22,8 +23,15 @@ TerraGlideStatus TerraGlide::setup() noexcept
         std::cerr << "Error: " << std::get<0>(terrain) << std::endl;
         return TerraGlideStatus::Stop;
     }
-
     m_terrain = std::get<1>(terrain);
+
+    auto skyDome = makeSkyDome();
+    if (std::holds_alternative<std::string>(skyDome))
+    {
+        std::cerr << "Error: " << std::get<0>(skyDome) << std::endl;
+        return TerraGlideStatus::Stop;
+    }
+    m_skyDome = std::get<1>(skyDome);
 
     initialSettings();
 
@@ -134,6 +142,7 @@ void TerraGlide::cursorPos(const glm::vec2& pos) noexcept
 void TerraGlide::teardown() noexcept
 {
     m_terrain->release();
+    m_skyDome->release();
 }
 
 void TerraGlide::initialSettings() noexcept
