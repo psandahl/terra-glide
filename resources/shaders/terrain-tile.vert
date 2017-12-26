@@ -6,6 +6,9 @@ layout (location = 1) in vec3 normal;
 // Premultiplied mvp matrix.
 uniform mat4 mvpMatrix;
 
+// View matrix (for calculation of fog distance).
+uniform mat4 viewMatrix;
+
 // Premultiplied normal matrix which put normals into view space.
 uniform mat3 normalMatrix;
 
@@ -28,6 +31,10 @@ uniform float ambientStrength;
 uniform vec3 sunDirection;
 uniform vec3 sunColor;
 
+// Fog color and fog distance.
+uniform vec3 fogColor;
+uniform float fogDistance;
+
 // The color to be interpolated for the fragment shader.
 out vec3 fragmentColor;
 
@@ -38,7 +45,12 @@ vec3 sunLight();
 
 void main()
 {
-	fragmentColor = terrainColor() * (ambientLight() + sunLight());
+	vec3 transformedPosition = (viewMatrix * vec4(position, 1)).xyz;
+	float dist = distance(vec3(0), transformedPosition);
+
+	vec3 withoutFog = terrainColor() * (ambientLight() + sunLight());
+	fragmentColor = mix(withoutFog, fogColor, smoothstep(0, fogDistance, dist)); 
+
 	gl_Position = mvpMatrix * vec4(position, 1);
 }
 

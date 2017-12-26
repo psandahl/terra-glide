@@ -7,7 +7,7 @@
 class Environment
 {
 public:
-    static constexpr float FarPlane = 850.0f;
+    static constexpr float FarPlane = 1000.0f;
 
     Environment() :
         m_terrainHeight(200.0f),
@@ -15,6 +15,7 @@ public:
         m_verticalSpeed(2),
         m_rotationSpeed(glm::radians(360.0f)),
         m_ambientStrength(0.2f),
+        m_fogDistance(950),
         m_ambientColor({ Math::color(255), Math::color(255), Math::color(255) }),
         m_sunDirection(glm::normalize(glm::vec3(-1, 0.3, 0))), // Yes, this is somewhat to the east.
         m_sunColor({ Math::color(182), Math::color(126), Math::color(91) }),
@@ -55,6 +56,11 @@ public:
     float ambientStrength() const noexcept
     {
         return m_ambientStrength;
+    }
+
+    float fogDistance() const noexcept
+    {
+        return m_fogDistance;
     }
 
     const glm::vec3& ambientColor() const noexcept
@@ -113,6 +119,7 @@ private:
     float m_verticalSpeed;
     float m_rotationSpeed;
     float m_ambientStrength;
+    float m_fogDistance;
     glm::vec3 m_ambientColor;
     glm::vec3 m_sunDirection;
     glm::vec3 m_sunColor;

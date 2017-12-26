@@ -82,6 +82,7 @@ void Terrain::render(const glm::mat4& perspective,
 
     m_program->enable();
     m_program->setUniform("mvpMatrix", vpMatrix);
+    m_program->setUniform("viewMatrix", view);
     m_program->setUniform("normalMatrix", Math::normalMatrix(view));
     m_program->setUniform("terrainHeight", environment.terrainHeight());
     m_program->setUniform("terrainColor0", environment.terrainColor0());
@@ -93,6 +94,8 @@ void Terrain::render(const glm::mat4& perspective,
     m_program->setUniform("sunDirection", 
         transformSunDirection(view, environment.sunDirection()));
     m_program->setUniform("sunColor", environment.sunColor());
+    m_program->setUniform("fogColor", environment.fogColor());
+    m_program->setUniform("fogDistance", environment.fogDistance());
 
     for (auto tile : m_tiles)
     {
