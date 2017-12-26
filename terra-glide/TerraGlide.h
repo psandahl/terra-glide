@@ -46,14 +46,14 @@ private:
     static void initialSettings() noexcept;
     static Camera initialCamera() noexcept
     {
-        return { glm::vec3(100000, 225, 100000), {glm::radians(0.0f), 0.0f}, { glm::radians(0.0f), 0.0f } };
+        return { glm::vec3(1000, 225, 1000), {glm::radians(0.0f), 0.0f}, { glm::radians(0.0f), 0.0f } };
     }
     static glm::mat4 perspectiveViewport(const Viewport& viewport) noexcept
     {
         return glm::perspectiveFov(glm::radians(45.0f), 
             static_cast<float>(std::get<0>(viewport)), 
             static_cast<float>(std::get<1>(viewport)), 
-            0.5f, Environment::FarPlane);
+            0.1f, Environment::FarPlane);
     }
     static void setViewport(const Viewport& viewport) noexcept
     {

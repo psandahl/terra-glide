@@ -3,6 +3,8 @@
 #include "Vertex.h"
 #include <glad\glad.h>
 #include <glm\vec3.hpp>
+#include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtc\matrix_access.hpp>
 #include <vector>
 
 std::vector<VertexWithPosition> vertices();
@@ -13,8 +15,8 @@ std::variant<std::string, std::shared_ptr<SkyDome>> makeSkyDome()
     auto program =
         makeProgram(
             {
-                { ShaderType::Vertex, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\skydome.vert" },
-                { ShaderType::Fragment, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\skydome.frag" }
+                { ShaderType::Vertex, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\sky-dome.vert" },
+                { ShaderType::Fragment, "\\Users\\patri\\source\\repos\\terra-glide\\resources\\shaders\\sky-dome.frag" }
             });
 
     if (std::holds_alternative<std::string>(program))
@@ -38,6 +40,29 @@ void SkyDome::render(const glm::mat4& perspective,
     const::glm::mat4& view,
     const Environment& environment) noexcept
 {
+    GLint cullMode[1];
+    glGetIntegerv(GL_CULL_FACE_MODE, cullMode);
+    glCullFace(GL_FRONT);
+
+    GLboolean depthMask[1];
+    glGetBooleanv(GL_DEPTH_WRITEMASK, depthMask);
+    glDepthMask(GL_FALSE);
+
+    m_program->enable();
+    m_mesh->enable();
+
+    // Make the sky dome snap to the camera.
+    auto snapToCamera = glm::column(view, 3, { 0.0f, 0.0f, 0.0f, 1.0f });
+
+    auto mvpMatrix = perspective * snapToCamera;
+    m_program->setUniform("mvpMatrix", mvpMatrix);
+    m_mesh->render();
+
+    m_mesh->disable();
+    m_program->disable();
+
+    glCullFace(cullMode[0]);
+    glDepthMask(depthMask[0]);
 }
 
 void SkyDome::release() noexcept

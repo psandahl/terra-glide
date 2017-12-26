@@ -45,11 +45,12 @@ TerraGlideStatus TerraGlide::frame(const Viewport& viewport, float duration) noe
     m_terrain->prepare(m_camera.position(), m_environment);
 
     setViewport(viewport);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     auto perspective = perspectiveViewport(viewport);
     auto view = m_camera.matrix();
 
+    m_skyDome->render(perspective, view, m_environment);
     m_terrain->render(perspective, view, m_environment);
 
     return TerraGlideStatus::Continue;
@@ -147,7 +148,6 @@ void TerraGlide::teardown() noexcept
 
 void TerraGlide::initialSettings() noexcept
 {
-    glClearColor(Math::color(114), Math::color(171), Math::color(245), 0);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
