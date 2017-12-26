@@ -56,6 +56,8 @@ void SkyDome::render(const glm::mat4& perspective,
 
     auto mvpMatrix = perspective * snapToCamera;
     m_program->setUniform("mvpMatrix", mvpMatrix);
+    m_program->setUniform("skyColor", environment.skyColor());
+    m_program->setUniform("horizonColor", environment.horizonColor());
     m_mesh->render();
 
     m_mesh->disable();
