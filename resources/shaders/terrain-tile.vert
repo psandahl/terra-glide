@@ -47,9 +47,12 @@ void main()
 {
 	vec3 transformedPosition = (viewMatrix * vec4(position, 1)).xyz;
 	float dist = distance(vec3(0), transformedPosition);
+	//float fogFactor = smoothstep(0, fogDistance, dist);
+	//float fogFactor = 1.0 - clamp((fogDistance - dist) / (fogDistance - 100.0), 0.0, 1.0);
+	float fogFactor = 1.0 - clamp(exp(-0.003 * dist), 0.0, 1.0);
 
 	vec3 withoutFog = terrainColor() * (ambientLight() + sunLight());
-	fragmentColor = mix(withoutFog, fogColor, smoothstep(0, fogDistance, dist)); 
+	fragmentColor = mix(withoutFog, fogColor, fogFactor); 
 
 	gl_Position = mvpMatrix * vec4(position, 1);
 }
