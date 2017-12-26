@@ -20,6 +20,7 @@ public:
         m_sunColor({ Math::color(182), Math::color(126), Math::color(91) }),
         m_skyColor({ Math::color(70), Math::color(106), Math::color(200) }),
         m_horizonColor({ Math::color(246), Math::color(176), Math::color(133) }),
+        m_fogColor({ Math::color(122), Math::color(122), Math::color(122) }),
         m_terrainColor0({ Math::color(115), Math::color(69), Math::color(35) }),
         m_terrainColor1({ Math::color(57), Math::color(118), Math::color(40) }),
         m_terrainColor2({ Math::color(45), Math::color(58), Math::color(61) }),
@@ -81,6 +82,11 @@ public:
         return m_horizonColor;
     }
 
+    const glm::vec3& fogColor() const noexcept
+    {
+        return m_fogColor;
+    }
+
     const glm::vec3& terrainColor0() const noexcept
     {
         return m_terrainColor0;
@@ -112,6 +118,7 @@ private:
     glm::vec3 m_sunColor;
     glm::vec3 m_skyColor;
     glm::vec3 m_horizonColor;
+    glm::vec3 m_fogColor;
     glm::vec3 m_terrainColor0;
     glm::vec3 m_terrainColor1;
     glm::vec3 m_terrainColor2;

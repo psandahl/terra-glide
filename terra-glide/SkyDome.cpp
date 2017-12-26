@@ -58,6 +58,7 @@ void SkyDome::render(const glm::mat4& perspective,
     m_program->setUniform("mvpMatrix", mvpMatrix);
     m_program->setUniform("skyColor", environment.skyColor());
     m_program->setUniform("horizonColor", environment.horizonColor());
+    m_program->setUniform("fogColor", environment.fogColor());
     m_mesh->render();
 
     m_mesh->disable();

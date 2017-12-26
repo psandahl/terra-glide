@@ -4,14 +4,16 @@ in vec3 vPosition;
 
 uniform vec3 skyColor;
 uniform vec3 horizonColor;
+uniform vec3 fogColor;
 
 out vec4 color;
+
+const float fogHeight = 0.3;
 
 void main()
 {
 	float y = abs(vPosition.y);
-	vec3 gradient = mix(horizonColor, skyColor, y);
-	color = vec4(gradient, 1);
+	vec3 skyGradient = mix(horizonColor, skyColor, y);
 
-	//color = vec4(vec3(abs(vPosition.x), abs(vPosition.y), abs(vPosition.z)), 1);
+	color = vec4(mix(fogColor, skyGradient, smoothstep(0, fogHeight, y)), 1);
 }
