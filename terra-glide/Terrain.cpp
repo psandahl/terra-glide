@@ -95,7 +95,7 @@ void Terrain::render(const glm::mat4& perspective,
         transformSunDirection(view, environment.sunDirection()));
     m_program->setUniform("sunColor", environment.sunColor());
     m_program->setUniform("fogColor", environment.fogColor());
-    m_program->setUniform("fogDistance", environment.fogDistance());
+    m_program->setUniform("fogIntensity", environment.fogIntensity());
 
     for (auto tile : m_tiles)
     {

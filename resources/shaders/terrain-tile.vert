@@ -31,9 +31,9 @@ uniform float ambientStrength;
 uniform vec3 sunDirection;
 uniform vec3 sunColor;
 
-// Fog color and fog distance.
+// Fog color and fog intensity.
 uniform vec3 fogColor;
-uniform float fogDistance;
+uniform float fogIntensity;
 
 // The color to be interpolated for the fragment shader.
 out vec3 fragmentColor;
@@ -49,7 +49,8 @@ void main()
 	float dist = distance(vec3(0), transformedPosition);
 	//float fogFactor = smoothstep(0, fogDistance, dist);
 	//float fogFactor = 1.0 - clamp((fogDistance - dist) / (fogDistance - 100.0), 0.0, 1.0);
-	float fogFactor = 1.0 - clamp(exp(-0.003 * dist), 0.0, 1.0);
+	//float fogFactor = 1.0 - clamp(exp(-0.003 * dist), 0.0, 1.0);
+	float fogFactor = 1.0 - clamp(exp(-pow(fogIntensity * dist, 2.0)), 0.0, 1.0);
 
 	vec3 withoutFog = terrainColor() * (ambientLight() + sunLight());
 	fragmentColor = mix(withoutFog, fogColor, fogFactor); 
