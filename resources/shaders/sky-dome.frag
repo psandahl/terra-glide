@@ -13,7 +13,13 @@ const float fogHeight = 0.3;
 void main()
 {
 	float y = abs(vPosition.y);
-	vec3 skyGradient = mix(horizonColor, skyColor, y);
-
-	color = vec4(mix(fogColor, skyGradient, smoothstep(0, fogHeight, y)), 1);
+	if (vPosition.y < 0)
+	{
+		color = vec4(fogColor, 1);
+	}
+	else
+	{
+		vec3 skyGradient = mix(horizonColor, skyColor, vPosition.y);
+		color = vec4(mix(fogColor, skyGradient, smoothstep(0, fogHeight, y)), 1);
+	}
 }
