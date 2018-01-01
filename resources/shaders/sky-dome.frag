@@ -8,7 +8,7 @@ uniform vec3 fogColor;
 
 out vec4 color;
 
-const float fogHeight = 0.3;
+const float fogHeight = 0.1;
 
 void main()
 {
